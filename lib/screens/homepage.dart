@@ -43,8 +43,10 @@ class _HomePageState extends State<HomePage> {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.end,
             children: [
-              FutureBuilder<List>(
-                future: connect.getData(),
+              // FutureBuilder<List>(
+              StreamBuilder<List>(
+                // future: connect.getData(),
+                stream: connect.getDataStream(),
                 builder: (context, snapshot) {
                   var data = snapshot.data;
                   if (snapshot.hasData == true) {

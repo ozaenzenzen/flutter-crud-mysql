@@ -4,6 +4,11 @@ import 'package:http/http.dart' as http;
 
 class Connect {
   final dio = Dio();
+
+  Stream<List> getDataStream() {
+    return Stream.periodic(Duration(seconds: 1)).asyncMap((event) => getData());
+  }
+
   Future<List> getData() async {
     String url = "http://10.0.2.2/flutter_crud_mysql1/get_data.php";
 
