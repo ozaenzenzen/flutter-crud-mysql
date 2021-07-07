@@ -5,7 +5,6 @@ import 'package:http/http.dart' as http;
 class Connect {
   final dio = Dio();
   Future<List> getData() async {
-    // dio = Dio();
     String url = "http://10.0.2.2/flutter_crud_mysql1/get_data.php";
 
     final response = await dio.get(url);
@@ -23,12 +22,13 @@ class Connect {
     // dio = Dio();
     String url = "http://10.0.2.2/flutter_crud_mysql1/add_data.php";
 
-    var data = {
+    var data = FormData.fromMap({
       'item_code': itemcode,
       'item_name': itemname,
       'price': price,
       'stock': stock,
-    };
+    });
+
     // http.post(
     //   Uri.parse(url),
     //   body: data,
@@ -36,13 +36,37 @@ class Connect {
 
     dio.post(
       url,
-      data: {
-        'item_code': 'x',
-        'item_name': 'x',
-        'price': 'x',
-        'stock': 'x',
-      },
-      // options: Options(method: 'POST'),
+      data: data,
+    );
+  }
+
+  void editData(var id, var itemcode, var itemname, var price, var stock) {
+    String url = "http://10.0.2.2/flutter_crud_mysql1/edit_data.php";
+
+    var data = FormData.fromMap({
+      'id': id,
+      'item_code': itemcode,
+      'item_name': itemname,
+      'price': price,
+      'stock': stock,
+    });
+
+    dio.post(
+      url,
+      data: data,
+    );
+  }
+
+  void deleteData(var id) {
+    String url = "http://10.0.2.2/flutter_crud_mysql1/delete_data.php";
+
+    var data = FormData.fromMap({
+      'id': id,
+    });
+
+    dio.post(
+      url,
+      data: data,
     );
   }
 }
