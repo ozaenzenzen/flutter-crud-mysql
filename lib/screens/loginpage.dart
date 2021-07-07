@@ -18,8 +18,9 @@ class _LoginPageState extends State<LoginPage> {
         title: Text(
           "Login Page",
           style: TextStyle(
-            fontFamily: "SF Compact",
+            fontFamily: "SF UI",
             fontSize: 22,
+            fontWeight: FontWeight.bold,
           ),
         ),
       ),
