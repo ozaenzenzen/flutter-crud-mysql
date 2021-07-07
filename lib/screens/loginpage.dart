@@ -90,7 +90,7 @@ class _LoginPageState extends State<LoginPage> {
             ),
             ElevatedButton(
               onPressed: () {
-                Get.to(() => HomePage());
+                Get.off(() => HomePage());
               },
               style: ElevatedButton.styleFrom(
                 minimumSize: Size(120, 50),
