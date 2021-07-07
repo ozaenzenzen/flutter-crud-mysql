@@ -1,19 +1,52 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_crud_mysql_1/screens/homepage.dart';
 import 'package:flutter_crud_mysql_1/services/connect.dart';
 import 'package:get/get.dart';
 
 class AddPage extends StatefulWidget {
+  final data;
+  final type;
+  final index;
+
+  AddPage({
+    this.data,
+    this.type,
+    this.index,
+  });
+
   @override
   _AddPageState createState() => _AddPageState();
 }
 
 class _AddPageState extends State<AddPage> {
+  String? type;
+  var data;
+  int? index;
+
   Connect connect = Connect();
   TextEditingController codeController = new TextEditingController();
   TextEditingController nameController = new TextEditingController();
   TextEditingController priceController = new TextEditingController();
   TextEditingController stockController = new TextEditingController();
+
+  @override
+  void initState() {
+    data = widget.data;
+    type = widget.type;
+    index = widget.index;
+
+    if (type == "edit") {
+      codeController.text = data[index]['item_code'];
+      nameController.text = data[index]['item_name'];
+      priceController.text = data[index]['price'];
+      stockController.text = data[index]['stock'];
+    } else {
+      //
+    }
+
+    super.initState();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -22,7 +55,7 @@ class _AddPageState extends State<AddPage> {
         backgroundColor: Colors.cyan,
         centerTitle: true,
         title: Text(
-          "Add Data",
+          (type == "edit") ? "Edit Data" : "Add Data",
           style: TextStyle(
             fontFamily: "SF UI",
             fontWeight: FontWeight.bold,
@@ -77,19 +110,80 @@ class _AddPageState extends State<AddPage> {
               ),
             ),
             SizedBox(height: 10),
-            ElevatedButton(
-              onPressed: () {
-                setState(() {
-                  connect.addData(
-                    codeController.text,
-                    nameController.text,
-                    priceController.text,
-                    stockController.text,
-                  );
-                  Get.back();
-                });
-              },
-              child: Text("Add Data"),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.end,
+              children: [
+                (type == "edit")
+                    ? ElevatedButton(
+                        style: ElevatedButton.styleFrom(
+                          primary: Colors.red,
+                        ),
+                        onPressed: () {
+                          showDialog(
+                              context: context,
+                              builder: (context) {
+                                return AlertDialog(
+                                  title: Text("Delete Data"),
+                                  content:
+                                      Text("Data will be lost. Are you sure?"),
+                                  actions: [
+                                    ElevatedButton(
+                                      style: ElevatedButton.styleFrom(
+                                        primary: Colors.red,
+                                      ),
+                                      child: Text("Delete"),
+                                      onPressed: () {
+                                        setState(() {
+                                          connect.deleteData(data[index]['id']);
+                                        });
+                                        Get.to(() => HomePage());
+                                        Get.back();
+                                      },
+                                    ),
+                                    TextButton(
+                                      child: Text("Cancel"),
+                                      onPressed: () {
+                                        Get.back();
+                                      },
+                                    ),
+                                  ],
+                                );
+                              });
+                        },
+                        child: Text("Delete"),
+                      )
+                    : Container(),
+                SizedBox(
+                  width: 10,
+                ),
+                ElevatedButton(
+                  onPressed: () {
+                    if (type == "edit") {
+                      setState(() {
+                        connect.editData(
+                          data[index]['id'],
+                          codeController.text,
+                          nameController.text,
+                          priceController.text,
+                          stockController.text,
+                        );
+                        Get.back();
+                      });
+                    } else {
+                      setState(() {
+                        connect.addData(
+                          codeController.text,
+                          nameController.text,
+                          priceController.text,
+                          stockController.text,
+                        );
+                        Get.back();
+                      });
+                    }
+                  },
+                  child: Text((type == "edit") ? "Update Now" : "Add Data"),
+                ),
+              ],
             ),
           ],
         ),
