@@ -1,8 +1,12 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_crud_mysql_1/model/data.dart' as data;
 import 'package:flutter_crud_mysql_1/screens/addpage.dart';
+import 'package:flutter_crud_mysql_1/screens/loginpage.dart';
 import 'package:flutter_crud_mysql_1/services/connect.dart';
 import 'package:flutter_crud_mysql_1/widget/home_item.dart';
+import 'package:flutter_crud_mysql_1/widget/home_popup_menu.dart';
 import 'package:get/get.dart';
+import 'package:get_storage/get_storage.dart';
 
 class HomePage extends StatefulWidget {
   @override
@@ -12,6 +16,8 @@ class HomePage extends StatefulWidget {
 class _HomePageState extends State<HomePage> {
   ScrollController scrollController = ScrollController();
   Connect connect = Connect();
+  final box = GetStorage();
+  // Data data = Data();
 
   @override
   void initState() {
@@ -33,6 +39,12 @@ class _HomePageState extends State<HomePage> {
         backgroundColor: Colors.cyan,
         centerTitle: true,
         elevation: 0,
+        actions: [
+          Container(
+            padding: EdgeInsets.all(0),
+            child: HomePopupMenu(box: box),
+          )
+        ],
       ),
       body: SingleChildScrollView(
         child: Container(
@@ -43,9 +55,8 @@ class _HomePageState extends State<HomePage> {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.end,
             children: [
-              // FutureBuilder<List>(
+              // StreamBuilder<Data>(
               StreamBuilder<List>(
-                // future: connect.getData(),
                 stream: connect.getDataStream(),
                 builder: (context, snapshot) {
                   var data = snapshot.data;
@@ -73,31 +84,6 @@ class _HomePageState extends State<HomePage> {
                   }
                 },
               ),
-              // Container(
-              //   height: 30,
-              //   color: Colors.red,
-              // ),
-              // ElevatedButton(
-              //   onPressed: () {
-              //     AlertDialog alert = AlertDialog(
-              //       title: Text("Test"),
-              //       content: Text("Content"),
-              //       actions: [
-              //         TextButton(
-              //           onPressed: () {
-              //             Get.back();
-              //           },
-              //           child: Text("OK"),
-              //         ),
-              //       ],
-              //     );
-              //     showDialog(
-              //       context: context,
-              //       builder: (context) => alert,
-              //     );
-              //   },
-              //   child: Text("Add"),
-              // ),
             ],
           ),
         ),
