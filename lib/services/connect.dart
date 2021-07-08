@@ -1,8 +1,10 @@
 import 'dart:convert';
 import 'package:dio/dio.dart';
+import 'package:flutter_crud_mysql_1/services/data.dart';
 import 'package:http/http.dart' as http;
 
 class Connect {
+  Data data = Data();
   final dio = Dio();
 
   Stream<List> getDataStream() {
@@ -17,7 +19,8 @@ class Connect {
     if (response.statusCode == 200) {
       // var jsonObject = response.data as List;
       // return jsonObject.map((item) => Data.createData(item)).toList();
-      return json.decode(response.data);
+      var jsonObject = json.decode(response.data);
+      return jsonObject;
     } else {
       throw ("Data tidak ditemukan");
     }

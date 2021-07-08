@@ -13,7 +13,7 @@ class Data {
     this.stock,
   });
 
-  factory Data.createData(Map<String, dynamic> object) {
+  factory Data.fromJson(Map<String, dynamic> object) {
     return Data(
       id: object['id'],
       itemCode: object['item_code'].toString(),
