@@ -1,17 +1,19 @@
 import 'dart:convert';
 import 'package:dio/dio.dart';
-import 'package:flutter_crud_mysql_1/services/data.dart';
+import 'package:flutter_crud_mysql_1/model/data.dart';
 import 'package:http/http.dart' as http;
 
 class Connect {
   Data data = Data();
   final dio = Dio();
 
+  // Stream<Data> getDataStream() {
   Stream<List> getDataStream() {
     return Stream.periodic(Duration(seconds: 1)).asyncMap((event) => getData());
   }
 
   Future<List> getData() async {
+  // Future<Data> getData() async {
     String url = "http://10.0.2.2/flutter_crud_mysql1/get_data.php";
 
     final response = await dio.get(url);
@@ -21,6 +23,7 @@ class Connect {
       // return jsonObject.map((item) => Data.createData(item)).toList();
       var jsonObject = json.decode(response.data);
       return jsonObject;
+      // return Data.fromJson(jsonObject[0]);
     } else {
       throw ("Data tidak ditemukan");
     }
