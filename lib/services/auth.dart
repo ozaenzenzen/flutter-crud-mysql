@@ -1,13 +1,13 @@
 import 'dart:convert';
 import 'package:flutter_crud_mysql_1/model/user.dart';
-import 'package:http/http.dart' as http;
 import 'package:dio/dio.dart';
 
 class Auth {
   Dio dio = Dio();
 
   // Future<List> login(var username, var password) async {
-  Future<User> login(var username, var password) async {
+  // Future<User> login(var username, var password) async {
+  Future login(var username, var password) async {
     // void login(var username, var password) async {
     String url = "http://10.0.2.2/flutter_crud_mysql1/login.php";
 
@@ -21,8 +21,13 @@ class Auth {
       data: data,
     );
 
-    var jsonObject = json.decode(response.data);
+    List jsonObject = json.decode(response.data);
 
-    return User.fromJson(jsonObject[0]);
+    if (jsonObject.isEmpty) {
+      return null;
+    } else {
+      User userData = User.fromJson(jsonObject[0]);
+      return userData;
+    }
   }
 }
