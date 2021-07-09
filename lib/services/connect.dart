@@ -1,7 +1,6 @@
 import 'dart:convert';
 import 'package:dio/dio.dart';
 import 'package:flutter_crud_mysql_1/model/data.dart';
-import 'package:http/http.dart' as http;
 
 class Connect {
   Data data = Data();

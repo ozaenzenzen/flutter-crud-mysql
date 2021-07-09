@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_crud_mysql_1/model/data.dart' as data;
 import 'package:flutter_crud_mysql_1/screens/addpage.dart';
-import 'package:flutter_crud_mysql_1/screens/loginpage.dart';
 import 'package:flutter_crud_mysql_1/services/connect.dart';
 import 'package:flutter_crud_mysql_1/widget/home_item.dart';
 import 'package:flutter_crud_mysql_1/widget/home_popup_menu.dart';
