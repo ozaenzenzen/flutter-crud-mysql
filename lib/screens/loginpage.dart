@@ -1,8 +1,10 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_crud_mysql_1/model/user.dart';
 import 'package:flutter_crud_mysql_1/screens/adminpage.dart';
 import 'package:flutter_crud_mysql_1/screens/homepage.dart';
 import 'package:flutter_crud_mysql_1/services/auth.dart';
+import 'package:flutter_crud_mysql_1/widget/login_alertdialog.dart';
 import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
 
@@ -12,50 +14,66 @@ class LoginPage extends StatefulWidget {
 }
 
 class _LoginPageState extends State<LoginPage> {
-  TextEditingController userController = TextEditingController();
-  TextEditingController passController = TextEditingController();
   Auth auth = Auth();
   User user = User();
   final box = GetStorage();
 
-  void loginMethod() {
-    if (userController.text.isEmpty || passController.text.isEmpty) {
-      showDialog(
-        context: context,
-        builder: (context) {
-          return AlertDialog(
-            title: Text("Username / Password Salah"),
-            content: Text("Silakan coba login kembali"),
-            actions: [
-              TextButton(
-                onPressed: () {
-                  Get.back();
-                },
-                child: Text("OK"),
-              ),
-            ],
-          );
-        },
-      );
+  TextEditingController userController = TextEditingController();
+  TextEditingController passController = TextEditingController();
+
+  void loginMethod(var usernameData, var passwordData) {
+    if (usernameData.isEmpty || passwordData.isEmpty) {
+      // if (userController.text.isEmpty || passController.text.isEmpty) {
+      print("empty text field");
+      loginShowDialog();
     } else {
-      auth.login(userController.text, passController.text).then((value) {
+      auth.login(usernameData, passwordData).then((value) {
         user = value;
-        box.write('userUsername', user.username);
-        box.write('userPassword', user.password);
-        box.write('userLevel', user.level);
+        //
+        if (user.isNull) {
+          print("data is null");
+          loginShowDialog();
+        } else {
+          box.write('userUsername', user.username);
+          box.write('userPassword', user.password);
+          box.write('userLevel', user.level);
+          if (user.level == "admin") {
+            Get.off(() => AdminPage());
+          } else if (user.level == "member") {
+            Get.off(() => HomePage());
+          } else {
+            print("no role level");
+            loginShowDialog();
+          }
+        }
+        //
       });
-      if (user.level == "admin") {
-        Get.off(() => AdminPage());
-      } else if (user.level == "member") {
-        Get.off(() => HomePage());
-      } else {}
     }
   }
 
+  Future<dynamic> loginShowDialog() {
+    return showDialog(
+      context: context,
+      builder: (context) {
+        return LoginAlertDialog();
+      },
+    );
+  }
+
+  @override
+  void dispose() {
+    userController.dispose();
+    passController.dispose();
+    super.dispose();
+  }
+
+  bool _secureText = true;
+
   @override
   Widget build(BuildContext context) {
-    userController.text = "";
-    passController.text = "";
+    // dispose();
+    // userController.text = "";
+    // passController.text = "";
 
     return Scaffold(
       appBar: AppBar(
@@ -93,6 +111,7 @@ class _LoginPageState extends State<LoginPage> {
                   height: 10,
                 ),
                 TextField(
+                  // onChanged: (value) => userController.text = value,
                   controller: userController,
                   decoration: InputDecoration(
                     labelText: "Email / Username",
@@ -122,9 +141,24 @@ class _LoginPageState extends State<LoginPage> {
                   height: 10,
                 ),
                 TextField(
+                  // onChanged: (value) {
+                  //   setState(() {
+                  //     passController.text = value;
+                  //   });
+                  // },
                   controller: passController,
-                  obscureText: true,
+                  obscureText: _secureText,
                   decoration: InputDecoration(
+                    suffixIcon: IconButton(
+                      onPressed: () {
+                        setState(() {
+                          _secureText = !_secureText;
+                        });
+                      },
+                      icon: Icon((_secureText)
+                          ? CupertinoIcons.eye_fill
+                          : CupertinoIcons.eye_slash_fill),
+                    ),
                     labelText: "Password",
                     labelStyle: TextStyle(
                       fontFamily: "SF Text",
@@ -139,7 +173,12 @@ class _LoginPageState extends State<LoginPage> {
             ),
             ElevatedButton(
               onPressed: () {
-                loginMethod();
+                print(userController.text);
+                print(passController.text);
+                loginMethod(
+                  userController.text,
+                  passController.text,
+                );
               },
               style: ElevatedButton.styleFrom(
                 minimumSize: Size(120, 50),
