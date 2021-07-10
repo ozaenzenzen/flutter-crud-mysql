@@ -5,6 +5,7 @@ import 'package:flutter_crud_mysql_1/screens/adminpage.dart';
 import 'package:flutter_crud_mysql_1/screens/homepage.dart';
 import 'package:flutter_crud_mysql_1/services/auth.dart';
 import 'package:flutter_crud_mysql_1/widget/login_alertdialog.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
 
@@ -68,8 +69,10 @@ class _LoginPageState extends State<LoginPage> {
 
   bool _secureText = true;
 
+
   @override
   Widget build(BuildContext context) {
+  ScreenUtil screenUtil = ScreenUtil();
     return Scaffold(
       body: SingleChildScrollView(
         child: Column(
@@ -83,7 +86,8 @@ class _LoginPageState extends State<LoginPage> {
                     decoration: BoxDecoration(
                       color: Colors.cyan,
                     ),
-                    height: 450,
+                    // height: MediaQuery.of(context).size.height * 0.5,
+                    height: screenUtil.setHeight(400),
                     width: double.infinity,
                   ),
                 ),

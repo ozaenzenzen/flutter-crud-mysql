@@ -87,6 +87,7 @@ class _HomePageState extends State<HomePage> {
         ),
       ),
       floatingActionButton: FloatingActionButton(
+        backgroundColor: Colors.cyan,
         onPressed: () {
           Get.to(() => AddPage());
         },

@@ -40,12 +40,18 @@ class _AdminPageState extends State<AdminPage> {
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
                     ElevatedButton(
+                      style: ElevatedButton.styleFrom(
+                        primary: Colors.cyan,
+                      ),
                       onPressed: () {
                         Get.to(() => HomePage());
                       },
                       child: Text("Halaman Home"),
                     ),
                     ElevatedButton(
+                      style: ElevatedButton.styleFrom(
+                        primary: Colors.cyan,
+                      ),
                       onPressed: () {},
                       child: Text("Daftar Akun Member"),
                     ),
