@@ -8,7 +8,6 @@ class Auth {
   // Future<List> login(var username, var password) async {
   // Future<User> login(var username, var password) async {
   Future login(var username, var password) async {
-    // void login(var username, var password) async {
     String url = "http://10.0.2.2/flutter_crud_mysql1/login.php";
 
     var data = FormData.fromMap({

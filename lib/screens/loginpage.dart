@@ -23,7 +23,6 @@ class _LoginPageState extends State<LoginPage> {
 
   void loginMethod(var usernameData, var passwordData) {
     if (usernameData.isEmpty || passwordData.isEmpty) {
-      // if (userController.text.isEmpty || passController.text.isEmpty) {
       print("empty text field");
       loginShowDialog();
     } else {
