@@ -1,6 +1,8 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.example.flutter_crud_mysql_1">
+    <uses-permission android:name="android.permission.INTERNET" />
    <application
+        android:usesCleartextTraffic="true"
         android:label="flutter_crud_mysql_1"
         android:icon="@mipmap/ic_launcher">
         <activity
