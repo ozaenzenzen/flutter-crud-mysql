@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_crud_mysql_1/model/data.dart' as data;
+import 'package:flutter_crud_mysql_1/model/itemdata.dart';
 import 'package:flutter_crud_mysql_1/screens/addpage.dart';
 import 'package:flutter_crud_mysql_1/services/connect.dart';
 import 'package:flutter_crud_mysql_1/widget/home_item.dart';
@@ -16,7 +16,7 @@ class _HomePageState extends State<HomePage> {
   ScrollController scrollController = ScrollController();
   Connect connect = Connect();
   final box = GetStorage();
-  // Data data = Data();
+  ItemData data = ItemData();
 
   @override
   void initState() {
@@ -54,7 +54,6 @@ class _HomePageState extends State<HomePage> {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.end,
             children: [
-              // StreamBuilder<Data>(
               StreamBuilder<List>(
                 stream: connect.getDataStream(),
                 builder: (context, snapshot) {

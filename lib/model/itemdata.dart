@@ -1,11 +1,11 @@
-class Data {
+class ItemData {
   int? id;
   String? itemCode;
   String? itemName;
   String? price;
   String? stock;
 
-  Data({
+  ItemData({
     this.id,
     this.itemCode,
     this.itemName,
@@ -13,8 +13,8 @@ class Data {
     this.stock,
   });
 
-  factory Data.fromJson(Map<String, dynamic> object) {
-    return Data(
+  factory ItemData.fromJson(Map<String, dynamic> object) {
+    return ItemData(
       id: object['id'],
       itemCode: object['item_code'].toString(),
       itemName: object['item_name'].toString(),
