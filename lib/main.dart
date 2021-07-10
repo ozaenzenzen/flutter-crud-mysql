@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_crud_mysql_1/screens/adminpage.dart';
 import 'package:flutter_crud_mysql_1/screens/homepage.dart';
 import 'package:flutter_crud_mysql_1/screens/loginpage.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
 
@@ -23,16 +24,18 @@ class _MyAppState extends State<MyApp> {
     var userPassword = box.read('userPassword');
     var userLevel = box.read('userLevel');
 
-    return GetMaterialApp(
-      home: (userUsername == null)
-          ? LoginPage()
-          : (userLevel == "admin")
-              ? AdminPage()
-              : (userLevel == "member")
-                  ? HomePage()
-                  : LoginPage(),
-      debugShowCheckedModeBanner: false,
-      defaultTransition: Transition.cupertino,
+    return ScreenUtilInit(
+      builder: () => GetMaterialApp(
+        home: (userUsername == null)
+            ? LoginPage()
+            : (userLevel == "admin")
+                ? AdminPage()
+                : (userLevel == "member")
+                    ? HomePage()
+                    : LoginPage(),
+        debugShowCheckedModeBanner: false,
+        defaultTransition: Transition.cupertino,
+      ),
     );
   }
 }
