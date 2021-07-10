@@ -69,10 +69,9 @@ class _LoginPageState extends State<LoginPage> {
 
   bool _secureText = true;
 
-
   @override
   Widget build(BuildContext context) {
-  ScreenUtil screenUtil = ScreenUtil();
+    ScreenUtil screenUtil = ScreenUtil();
     return Scaffold(
       body: SingleChildScrollView(
         child: Column(
@@ -87,7 +86,7 @@ class _LoginPageState extends State<LoginPage> {
                       color: Colors.cyan,
                     ),
                     // height: MediaQuery.of(context).size.height * 0.5,
-                    height: screenUtil.setHeight(400),
+                    height: screenUtil.setHeight(350),
                     width: double.infinity,
                   ),
                 ),
@@ -108,11 +107,11 @@ class _LoginPageState extends State<LoginPage> {
                   top: 200,
                   left: 25,
                   child: Text(
-                    "Login Page",
+                    "Logbook App Login Page",
                     style: TextStyle(
                       color: Colors.white,
                       fontFamily: "SF UI",
-                      fontSize: 24,
+                      fontSize: 23,
                       fontWeight: FontWeight.bold,
                     ),
                   ),
@@ -121,7 +120,7 @@ class _LoginPageState extends State<LoginPage> {
             ),
             Container(
               margin: EdgeInsets.symmetric(
-                vertical: 15,
+                vertical: 10,
                 horizontal: 20,
               ),
               child: Column(
@@ -251,45 +250,6 @@ class _LoginPageState extends State<LoginPage> {
               ),
             ),
           ],
-        ),
-      ),
-    );
-  }
-}
-
-class AppTextField extends StatelessWidget {
-  const AppTextField({
-    Key? key,
-    required this.userController,
-  }) : super(key: key);
-
-  final TextEditingController userController;
-
-  @override
-  Widget build(BuildContext context) {
-    return Container(
-      padding: EdgeInsets.symmetric(horizontal: 10),
-      decoration: BoxDecoration(
-        borderRadius: BorderRadius.circular(20),
-        color: Colors.white,
-        boxShadow: [
-          BoxShadow(
-            color: Colors.cyan.shade100,
-            offset: Offset(0, 10),
-            spreadRadius: 1,
-            blurRadius: 10,
-          ),
-        ],
-      ),
-      child: TextField(
-        controller: userController,
-        decoration: InputDecoration(
-          border: InputBorder.none,
-          labelText: "Email / Username",
-          labelStyle: TextStyle(
-            fontFamily: "SF Text",
-            fontSize: 13,
-          ),
         ),
       ),
     );

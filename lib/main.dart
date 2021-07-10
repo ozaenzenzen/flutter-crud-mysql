@@ -25,6 +25,7 @@ class _MyAppState extends State<MyApp> {
     var userLevel = box.read('userLevel');
 
     return ScreenUtilInit(
+      
       builder: () => GetMaterialApp(
         home: (userUsername == null)
             ? LoginPage()
