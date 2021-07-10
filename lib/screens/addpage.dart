@@ -57,6 +57,7 @@ class _AddPageState extends State<AddPage> {
           (type == "edit") ? "Edit Data" : "Add Data",
           style: TextStyle(
             fontFamily: "SF UI",
+            fontSize: 22,
             fontWeight: FontWeight.bold,
           ),
         ),

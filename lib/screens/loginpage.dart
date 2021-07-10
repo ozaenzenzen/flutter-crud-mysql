@@ -70,130 +70,246 @@ class _LoginPageState extends State<LoginPage> {
 
   @override
   Widget build(BuildContext context) {
-    // dispose();
-    // userController.text = "";
-    // passController.text = "";
-
     return Scaffold(
-      appBar: AppBar(
-        backgroundColor: Colors.cyan,
-        elevation: 0,
-        centerTitle: true,
-        title: Text(
-          "Login Page",
-          style: TextStyle(
-            fontFamily: "SF UI",
-            fontSize: 22,
-            fontWeight: FontWeight.bold,
-          ),
-        ),
-      ),
-      body: Container(
-        margin: EdgeInsets.symmetric(
-          vertical: 15,
-          horizontal: 20,
-        ),
+      body: SingleChildScrollView(
         child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            //Email/username Text Field
-            Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
+            Stack(
               children: [
-                Text(
-                  "Email / Username",
-                  style: TextStyle(
-                    fontFamily: "SF Text",
+                ClipPath(
+                  clipBehavior: Clip.antiAlias,
+                  clipper: MyClipper(),
+                  child: Container(
+                    decoration: BoxDecoration(
+                      color: Colors.cyan,
+                    ),
+                    height: 450,
+                    width: double.infinity,
                   ),
                 ),
-                SizedBox(
-                  height: 10,
-                ),
-                TextField(
-                  // onChanged: (value) => userController.text = value,
-                  controller: userController,
-                  decoration: InputDecoration(
-                    labelText: "Email / Username",
-                    labelStyle: TextStyle(
-                      fontFamily: "SF Text",
+                Positioned(
+                  top: 120,
+                  left: 20,
+                  child: Text(
+                    "Welcome!",
+                    style: TextStyle(
+                      color: Colors.white,
+                      fontFamily: "SF UI",
+                      fontSize: 60,
+                      fontWeight: FontWeight.bold,
                     ),
-                    border: OutlineInputBorder(),
+                  ),
+                ),
+                Positioned(
+                  top: 200,
+                  left: 25,
+                  child: Text(
+                    "Login Page",
+                    style: TextStyle(
+                      color: Colors.white,
+                      fontFamily: "SF UI",
+                      fontSize: 24,
+                      fontWeight: FontWeight.bold,
+                    ),
                   ),
                 ),
               ],
             ),
-            SizedBox(
-              height: 20,
-            ),
-
-            //Password Text Field
-            Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Text(
-                  "Password",
-                  style: TextStyle(
-                    fontFamily: "SF Text",
-                  ),
-                ),
-                SizedBox(
-                  height: 10,
-                ),
-                TextField(
-                  // onChanged: (value) {
-                  //   setState(() {
-                  //     passController.text = value;
-                  //   });
-                  // },
-                  controller: passController,
-                  obscureText: _secureText,
-                  decoration: InputDecoration(
-                    suffixIcon: IconButton(
-                      onPressed: () {
-                        setState(() {
-                          _secureText = !_secureText;
-                        });
-                      },
-                      icon: Icon((_secureText)
-                          ? CupertinoIcons.eye_fill
-                          : CupertinoIcons.eye_slash_fill),
-                    ),
-                    labelText: "Password",
-                    labelStyle: TextStyle(
-                      fontFamily: "SF Text",
-                    ),
-                    border: OutlineInputBorder(),
-                  ),
-                ),
-              ],
-            ),
-            SizedBox(
-              height: 35,
-            ),
-            ElevatedButton(
-              onPressed: () {
-                print(userController.text);
-                print(passController.text);
-                loginMethod(
-                  userController.text,
-                  passController.text,
-                );
-              },
-              style: ElevatedButton.styleFrom(
-                minimumSize: Size(120, 50),
-                primary: Colors.cyan,
+            Container(
+              margin: EdgeInsets.symmetric(
+                vertical: 15,
+                horizontal: 20,
               ),
-              child: Text(
-                "Login",
-                style: TextStyle(
-                  fontFamily: "SF Text",
-                  fontSize: 17,
-                ),
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.start,
+                children: [
+                  //Email/username Text Field
+                  Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Text(
+                        "Email / Username",
+                        style: TextStyle(
+                          fontFamily: "SF Text",
+                        ),
+                      ),
+                      SizedBox(
+                        height: 10,
+                      ),
+                      Container(
+                        padding: EdgeInsets.symmetric(horizontal: 10),
+                        decoration: BoxDecoration(
+                          borderRadius: BorderRadius.circular(20),
+                          color: Colors.white,
+                          boxShadow: [
+                            BoxShadow(
+                              color: Colors.cyan.shade100,
+                              offset: Offset(0, 10),
+                              spreadRadius: 1,
+                              blurRadius: 10,
+                            ),
+                          ],
+                        ),
+                        child: TextField(
+                          controller: userController,
+                          decoration: InputDecoration(
+                            border: InputBorder.none,
+                            labelText: "Email / Username",
+                            labelStyle: TextStyle(
+                              fontFamily: "SF Text",
+                              fontSize: 13,
+                            ),
+                          ),
+                        ),
+                      ),
+                    ],
+                  ),
+                  SizedBox(
+                    height: 20,
+                  ),
+
+                  //Password Text Field
+                  Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Text(
+                        "Password",
+                        style: TextStyle(
+                          fontFamily: "SF Text",
+                        ),
+                      ),
+                      SizedBox(
+                        height: 10,
+                      ),
+                      Container(
+                        padding: EdgeInsets.symmetric(horizontal: 10),
+                        decoration: BoxDecoration(
+                          borderRadius: BorderRadius.circular(20),
+                          color: Colors.white,
+                          boxShadow: [
+                            BoxShadow(
+                              color: Colors.cyan.shade100,
+                              offset: Offset(0, 10),
+                              spreadRadius: 1,
+                              blurRadius: 10,
+                            ),
+                          ],
+                        ),
+                        child: TextField(
+                          controller: passController,
+                          obscureText: _secureText,
+                          decoration: InputDecoration(
+                            // border: OutlineInputBorder(),
+                            border: InputBorder.none,
+                            suffixIcon: IconButton(
+                              onPressed: () {
+                                setState(() {
+                                  _secureText = !_secureText;
+                                });
+                              },
+                              icon: Icon((_secureText)
+                                  ? CupertinoIcons.eye_fill
+                                  : CupertinoIcons.eye_slash_fill),
+                            ),
+                            labelText: "Password",
+                            labelStyle: TextStyle(
+                              fontFamily: "SF Text",
+                              fontSize: 13,
+                            ),
+                          ),
+                        ),
+                      ),
+                    ],
+                  ),
+                  SizedBox(
+                    height: 35,
+                  ),
+                  ElevatedButton(
+                    onPressed: () {
+                      loginMethod(
+                        userController.text,
+                        passController.text,
+                      );
+                    },
+                    style: ElevatedButton.styleFrom(
+                      minimumSize: Size(120, 50),
+                      primary: Colors.cyan,
+                    ),
+                    child: Text(
+                      "Login",
+                      style: TextStyle(
+                        fontFamily: "SF Text",
+                        fontSize: 17,
+                      ),
+                    ),
+                  ),
+                ],
               ),
             ),
           ],
         ),
       ),
     );
+  }
+}
+
+class AppTextField extends StatelessWidget {
+  const AppTextField({
+    Key? key,
+    required this.userController,
+  }) : super(key: key);
+
+  final TextEditingController userController;
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      padding: EdgeInsets.symmetric(horizontal: 10),
+      decoration: BoxDecoration(
+        borderRadius: BorderRadius.circular(20),
+        color: Colors.white,
+        boxShadow: [
+          BoxShadow(
+            color: Colors.cyan.shade100,
+            offset: Offset(0, 10),
+            spreadRadius: 1,
+            blurRadius: 10,
+          ),
+        ],
+      ),
+      child: TextField(
+        controller: userController,
+        decoration: InputDecoration(
+          border: InputBorder.none,
+          labelText: "Email / Username",
+          labelStyle: TextStyle(
+            fontFamily: "SF Text",
+            fontSize: 13,
+          ),
+        ),
+      ),
+    );
+  }
+}
+
+class MyClipper extends CustomClipper<Path> {
+  @override
+  Path getClip(Size size) {
+    var path = Path();
+    path.lineTo(0, size.height - 100);
+    path.quadraticBezierTo(
+        size.width / 4, size.height / 2, size.width / 2, size.height - 100);
+    path.quadraticBezierTo(size.width - (size.width / 4), size.height + 10,
+        size.width, size.height - 10);
+    path.lineTo(size.width, 0);
+    path.close();
+    return path;
+    // throw UnimplementedError();
+  }
+
+  @override
+  bool shouldReclip(covariant CustomClipper<Path> oldClipper) {
+    // throw UnimplementedError();
+    return true;
   }
 }
