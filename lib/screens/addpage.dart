@@ -158,6 +158,7 @@ class _AddPageState extends State<AddPage> {
                 ),
                 ElevatedButton(
                   onPressed: () {
+                    FocusScope.of(context).unfocus();
                     if (type == "edit") {
                       setState(() {
                         connect.editData(
