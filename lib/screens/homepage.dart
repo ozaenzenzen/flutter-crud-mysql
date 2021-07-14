@@ -1,3 +1,4 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_crud_mysql_1/model/itemdata.dart';
 import 'package:flutter_crud_mysql_1/screens/addpage.dart';
@@ -17,34 +18,35 @@ class _HomePageState extends State<HomePage> {
   Connect connect = Connect();
   final box = GetStorage();
   ItemData data = ItemData();
-
+  var adminLevel;
   @override
   void initState() {
+    adminLevel = box.read('userLevel');
     super.initState();
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: Text(
-          "Home Page",
-          style: TextStyle(
-            fontFamily: "SF UI",
-            fontSize: 22,
-            fontWeight: FontWeight.bold,
-          ),
-        ),
-        backgroundColor: Colors.cyan,
-        centerTitle: true,
-        elevation: 0,
-        actions: [
-          Container(
-            padding: EdgeInsets.all(0),
-            child: HomePopupMenu(box: box),
-          )
-        ],
-      ),
+      // appBar: AppBar(
+      //   title: Text(
+      //     "Home Page",
+      //     style: TextStyle(
+      //       fontFamily: "SF UI",
+      //       fontSize: 22,
+      //       fontWeight: FontWeight.bold,
+      //     ),
+      //   ),
+      //   backgroundColor: Colors.cyan,
+      //   centerTitle: true,
+      //   elevation: 0,
+      //   actions: [
+      //     Container(
+      //       padding: EdgeInsets.all(0),
+      //       child: HomePopupMenu(box: box),
+      //     )
+      //   ],
+      // ),
       body: SingleChildScrollView(
         child: Container(
           margin: EdgeInsets.symmetric(
@@ -52,35 +54,122 @@ class _HomePageState extends State<HomePage> {
             horizontal: 10,
           ),
           child: Column(
-            crossAxisAlignment: CrossAxisAlignment.end,
             children: [
-              StreamBuilder<List>(
-                stream: connect.getDataStream(),
-                builder: (context, snapshot) {
-                  var data = snapshot.data;
-                  if (snapshot.hasData == true) {
-                    return ListView.builder(
-                      controller: scrollController,
-                      shrinkWrap: true,
-                      physics: ScrollPhysics(),
-                      itemCount: (data == null) ? 0 : data.length,
-                      itemBuilder: (context, index) {
-                        return HomeItem(
-                          data: data,
-                          index: index,
-                        );
-                      },
-                    );
-                  } else {
-                    return Center(
-                      child: SizedBox(
-                        height: 30,
-                        width: 30,
-                        child: CircularProgressIndicator(),
+              SizedBox(
+                height: 30,
+              ),
+              Container(
+                child: Row(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    (adminLevel == "admin")
+                        ? Container(
+                            padding: EdgeInsets.all(0),
+                            decoration: BoxDecoration(
+                              borderRadius: BorderRadius.circular(20),
+                              color: Colors.cyan,
+                              boxShadow: [
+                                BoxShadow(
+                                  offset: Offset(2, 4),
+                                  blurRadius: 3,
+                                  spreadRadius: 1,
+                                  color: Colors.black45,
+                                ),
+                              ],
+                            ),
+                            child: IconButton(
+                              icon: Icon(
+                                CupertinoIcons.back,
+                                color: Colors.white,
+                                size: 30,
+                              ),
+                              onPressed: () {
+                                Get.back();
+                              },
+                            ),
+                          )
+                        : Container(),
+                    Container(
+                      padding: EdgeInsets.all(0),
+                      decoration: BoxDecoration(
+                        borderRadius: BorderRadius.circular(20),
+                        boxShadow: [
+                          BoxShadow(
+                            offset: Offset(2, 4),
+                            blurRadius: 3,
+                            spreadRadius: 1,
+                            color: Colors.black45,
+                          ),
+                        ],
+                        color: Colors.cyan,
                       ),
-                    );
-                  }
-                },
+                      child: HomePopupMenu(box: box),
+                    )
+                  ],
+                ),
+              ),
+              Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Container(
+                    margin: EdgeInsets.only(left: 20, top: 20),
+                    alignment: Alignment.centerLeft,
+                    child: Text(
+                      "Home \nPage",
+                      style: TextStyle(
+                        fontFamily: "SF UI",
+                        fontSize: 50,
+                        fontWeight: FontWeight.bold,
+                      ),
+                    ),
+                  ),
+                  Container(
+                    margin: EdgeInsets.only(left: 20, top: 5),
+                    alignment: Alignment.centerLeft,
+                    child: Text(
+                      "List of your logbook is here...",
+                      style: TextStyle(
+                        fontFamily: "SF UI",
+                        fontSize: 19,
+                        fontWeight: FontWeight.bold,
+                      ),
+                    ),
+                  ),
+                ],
+              ),
+              Column(
+                crossAxisAlignment: CrossAxisAlignment.end,
+                children: [
+                  StreamBuilder<List>(
+                    stream: connect.getDataStream(),
+                    builder: (context, snapshot) {
+                      var data = snapshot.data;
+                      if (snapshot.hasData == true) {
+                        return ListView.builder(
+                          controller: scrollController,
+                          shrinkWrap: true,
+                          physics: ScrollPhysics(),
+                          itemCount: (data == null) ? 0 : data.length,
+                          itemBuilder: (context, index) {
+                            return HomeItem(
+                              data: data,
+                              index: index,
+                            );
+                          },
+                        );
+                      } else {
+                        return Center(
+                          child: SizedBox(
+                            height: 30,
+                            width: 30,
+                            child: CircularProgressIndicator(),
+                          ),
+                        );
+                      }
+                    },
+                  ),
+                ],
               ),
             ],
           ),

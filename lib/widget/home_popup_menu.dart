@@ -1,3 +1,4 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_crud_mysql_1/screens/loginpage.dart';
 import 'package:get/get.dart';
@@ -14,8 +15,9 @@ class HomePopupMenu extends StatelessWidget {
   Widget build(BuildContext context) {
     return PopupMenuButton(
       icon: Icon(
-        Icons.more_vert,
-        size: 35,
+        CupertinoIcons.ellipsis_vertical,
+        color: Colors.white,
+        size: 30,
       ),
       onSelected: (value) {
         if (value == 1) {

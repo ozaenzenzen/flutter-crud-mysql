@@ -30,7 +30,7 @@ class _LoginPageState extends State<LoginPage> {
       auth.login(usernameData, passwordData).then((value) {
         user = value;
         //
-        if (user.isNull) {
+        if (user == (null)) {
           print("data is null");
           loginShowDialog();
         } else {
@@ -91,7 +91,7 @@ class _LoginPageState extends State<LoginPage> {
                   ),
                 ),
                 Positioned(
-                  top: 120,
+                  top: 80,
                   left: 20,
                   child: Text(
                     "Welcome!",
@@ -104,7 +104,7 @@ class _LoginPageState extends State<LoginPage> {
                   ),
                 ),
                 Positioned(
-                  top: 200,
+                  top: 160,
                   left: 25,
                   child: Text(
                     "Logbook App Login Page",
