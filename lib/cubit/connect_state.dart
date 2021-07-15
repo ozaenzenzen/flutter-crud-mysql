@@ -4,3 +4,7 @@ part of 'connect_cubit.dart';
 abstract class ConnectState {}
 
 class ConnectInitial extends ConnectState {}
+
+class ConnectSuccess extends ConnectState {}
+
+class ConnectFail extends ConnectState {}
