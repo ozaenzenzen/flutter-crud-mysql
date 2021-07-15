@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_crud_mysql_1/screens/loginpage.dart';
 import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
+
 class HomePopupMenu extends StatelessWidget {
   const HomePopupMenu({
     Key? key,
@@ -36,15 +37,72 @@ class HomePopupMenu extends StatelessWidget {
         return [
           PopupMenuItem(
             value: 1,
-            child: new Text("Profile"),
+            child: Row(
+              children: [
+                Icon(Icons.person),
+                Container(
+                  height: 30,
+                  child: VerticalDivider(
+                    color: Colors.black26,
+                    thickness: 2.0,
+                    width: 20,
+                  ),
+                ),
+                new Text(
+                  "Profile",
+                  style: TextStyle(
+                    fontFamily: "SF UI",
+                    fontSize: 15,
+                  ),
+                ),
+              ],
+            ),
           ),
           PopupMenuItem(
             value: 2,
-            child: new Text("Settings"),
+            child: Row(
+              children: [
+                Icon(Icons.settings),
+                Container(
+                  height: 30,
+                  child: VerticalDivider(
+                    color: Colors.black26,
+                    thickness: 2.0,
+                    width: 20,
+                  ),
+                ),
+                new Text(
+                  "Settings",
+                  style: TextStyle(
+                    fontFamily: "SF UI",
+                    fontSize: 15,
+                  ),
+                ),
+              ],
+            ),
           ),
           PopupMenuItem(
             value: 3,
-            child: new Text("Logout"),
+            child: Row(
+              children: [
+                Icon(Icons.exit_to_app),
+                Container(
+                  height: 30,
+                  child: VerticalDivider(
+                    color: Colors.black26,
+                    thickness: 2.0,
+                    width: 20,
+                  ),
+                ),
+                new Text(
+                  "Logout",
+                  style: TextStyle(
+                    fontFamily: "SF UI",
+                    fontSize: 15,
+                  ),
+                ),
+              ],
+            ),
           ),
         ];
       },
