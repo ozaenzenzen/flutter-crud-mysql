@@ -199,6 +199,13 @@ class _LoginPageState extends State<LoginPage> {
                           ],
                         ),
                         child: TextField(
+                          textInputAction: TextInputAction.go,
+                          onSubmitted: (value) {
+                            loginMethod(
+                              userController.text,
+                              passController.text,
+                            );
+                          },
                           controller: passController,
                           obscureText: _secureText,
                           decoration: InputDecoration(
