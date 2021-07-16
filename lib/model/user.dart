@@ -16,4 +16,12 @@ class User {
       level: object['level'].toString(),
     );
   }
+
+  Map<String, dynamic> toJson(){
+    Map<String, dynamic> data = Map<String, dynamic>();
+    username = data['username'];
+    password = data['password'];
+    level = data['level'];
+    return data;
+  }
 }
