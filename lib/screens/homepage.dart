@@ -2,9 +2,11 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_crud_mysql_1/model/itemdata.dart';
 import 'package:flutter_crud_mysql_1/screens/addpage.dart';
+import 'package:flutter_crud_mysql_1/screens/profilepage.dart';
 import 'package:flutter_crud_mysql_1/services/connect.dart';
 import 'package:flutter_crud_mysql_1/widget/home_item.dart';
 import 'package:flutter_crud_mysql_1/widget/home_popup_menu.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
 
@@ -18,12 +20,20 @@ class _HomePageState extends State<HomePage> {
   Connect connect = Connect();
   final box = GetStorage();
   ItemData data = ItemData();
+  ScreenUtil screenUtil = ScreenUtil();
   var adminLevel;
   @override
   void initState() {
     adminLevel = box.read('userLevel');
     super.initState();
   }
+
+  final List<Widget> _page = [
+    HomePage(),
+    ProfilePage(),
+  ];
+
+  int _currentIndex = 0;
 
   @override
   Widget build(BuildContext context) {
@@ -56,7 +66,7 @@ class _HomePageState extends State<HomePage> {
           child: Column(
             children: [
               SizedBox(
-                height: 30,
+                height: screenUtil.setHeight(35),
               ),
               Container(
                 child: Row(
@@ -174,6 +184,19 @@ class _HomePageState extends State<HomePage> {
             ],
           ),
         ),
+      ),
+      bottomNavigationBar: BottomNavigationBar(
+        currentIndex: 0,
+        items: [
+          BottomNavigationBarItem(
+            label: "Home",
+            icon: Icon(CupertinoIcons.house_fill),
+          ),
+          BottomNavigationBarItem(
+            label: "Profile",
+            icon: Icon(CupertinoIcons.person_fill),
+          ),
+        ],
       ),
       floatingActionButton: FloatingActionButton(
         backgroundColor: Colors.cyan,
