@@ -19,9 +19,9 @@ class User {
 
   Map<String, dynamic> toJson(){
     Map<String, dynamic> data = Map<String, dynamic>();
-    username = data['username'];
-    password = data['password'];
-    level = data['level'];
+    data['username'] = this.username;
+    data['password'] = this.password;
+    data['level'] = this.level;
     return data;
   }
 }

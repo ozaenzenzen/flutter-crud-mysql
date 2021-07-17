@@ -25,11 +25,11 @@ class ItemData {
 
   Map<String, dynamic> toJson(){
     Map<String, dynamic> data = Map<String, dynamic>();
-    id = data['id'];
-    itemCode = data['item_code'];
-    itemName = data['item_name'];
-    price = data['price'];
-    stock = data['stock'];
+    data['id'] = this.id;
+    data['item_code'] = this.itemCode;
+    data['item_name'] = this.itemName;
+    data['price'] = this.price;
+    data['stock'] = this.stock;
     return data;
   }
 }
