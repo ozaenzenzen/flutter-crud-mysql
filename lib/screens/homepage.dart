@@ -1,6 +1,9 @@
+import 'dart:convert';
+
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_crud_mysql_1/model/itemdata.dart';
+import 'package:flutter_crud_mysql_1/model/user.dart';
 import 'package:flutter_crud_mysql_1/screens/addpage.dart';
 import 'package:flutter_crud_mysql_1/screens/profilepage.dart';
 import 'package:flutter_crud_mysql_1/services/connect.dart';
@@ -21,10 +24,11 @@ class _HomePageState extends State<HomePage> {
   final box = GetStorage();
   ItemData data = ItemData();
   ScreenUtil screenUtil = ScreenUtil();
-  var adminLevel;
+  User? userData;
+
   @override
   void initState() {
-    adminLevel = box.read('userLevel');
+    userData = User.fromJson(json.decode(box.read('userData')));
     super.initState();
   }
 
@@ -73,7 +77,7 @@ class _HomePageState extends State<HomePage> {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
-                    (adminLevel == "admin")
+                    (userData!.level == "admin")
                         ? Container(
                             padding: EdgeInsets.all(0),
                             decoration: BoxDecoration(

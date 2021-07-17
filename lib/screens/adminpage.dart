@@ -1,4 +1,7 @@
+import 'dart:convert';
+
 import 'package:flutter/material.dart';
+import 'package:flutter_crud_mysql_1/model/user.dart';
 import 'package:flutter_crud_mysql_1/screens/homepage.dart';
 import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
@@ -10,10 +13,11 @@ class AdminPage extends StatefulWidget {
 
 class _AdminPageState extends State<AdminPage> {
   final box = GetStorage();
-  var userLevel;
+  User? userData;
+
   @override
-  void initState() {
-    userLevel = box.read('userLevel');
+  void initState() {  
+    userData = User.fromJson(json.decode(box.read('userData')));
     super.initState();
   }
 
@@ -34,7 +38,7 @@ class _AdminPageState extends State<AdminPage> {
         elevation: 0,
       ),
       body: Center(
-        child: (userLevel == 'admin')
+        child: (userData!.level == 'admin')
             ? Container(
                 child: Column(
                   mainAxisAlignment: MainAxisAlignment.center,

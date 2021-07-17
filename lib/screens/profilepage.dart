@@ -1,4 +1,7 @@
+import 'dart:convert';
+
 import 'package:flutter/material.dart';
+import 'package:flutter_crud_mysql_1/model/user.dart';
 import 'package:get_storage/get_storage.dart';
 
 class ProfilePage extends StatefulWidget {
@@ -10,7 +13,8 @@ class _ProfilePageState extends State<ProfilePage> {
   final box = GetStorage();
   @override
   Widget build(BuildContext context) {
-    String userUsername = box.read('userUsername');
+    // User.fromJson(json.decode(box.read('userData')));
+    User userData = User.fromJson(json.decode(box.read('userData')));
     return Scaffold(
       appBar: AppBar(
         title: Text(
@@ -30,7 +34,7 @@ class _ProfilePageState extends State<ProfilePage> {
           horizontal: 10,
         ),
         child: Text(
-          "Your role is $userUsername",
+          "Your role is ${userData.username}",
           style: TextStyle(
             fontFamily: "SF UI",
             fontSize: 40,

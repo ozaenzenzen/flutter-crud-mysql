@@ -26,9 +26,7 @@ class HomePopupMenu extends StatelessWidget {
           Get.to(() => ProfilePage());
         } else if (value == 2) {
         } else {
-          box.remove('userUsername');
-          box.remove('userPassword');
-          box.remove('userLevel');
+          box.remove('userData');
           Get.offAll(
             () => LoginPage(),
             transition: Transition.leftToRight,
