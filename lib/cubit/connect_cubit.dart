@@ -33,7 +33,7 @@ class ConnectCubit extends Cubit<ConnectState> {
     emit(ConnectLoading());
     try {
       GetStorage().write('userData', json.encode(userData));
-
+      print("local save success");
       emit(ConnectSuccess());
     } catch (e) {
       emit(ConnectError(e.toString()));
@@ -52,10 +52,13 @@ class ConnectCubit extends Cubit<ConnectState> {
     }
   }
 
-  Future<String?> getUserStorage() async {
-    final _data = await GetStorage().read("userData");
-    if (_data != null) {
-      return _data;
+  // Future<String?> getUserStorage() async {
+  // Future<User?> getUserStorage() async {
+  User? getUserStorage() {
+    final _data = GetStorage().read("userData");
+    final _result = User.fromJson(json.decode(_data));
+    if (_result != (null)) {
+      return _result;
     } else {
       return null;
     }
