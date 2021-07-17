@@ -13,8 +13,8 @@ class _ProfilePageState extends State<ProfilePage> {
   final box = GetStorage();
   @override
   Widget build(BuildContext context) {
-    // User.fromJson(json.decode(box.read('userData')));
-    User userData = User.fromJson(json.decode(box.read('userData')));
+    var localUserData = box.read('userData');
+    User userData = User.fromJson(json.decode(localUserData));
     return Scaffold(
       appBar: AppBar(
         title: Text(

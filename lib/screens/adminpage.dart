@@ -13,11 +13,14 @@ class AdminPage extends StatefulWidget {
 
 class _AdminPageState extends State<AdminPage> {
   final box = GetStorage();
+  var localUserData;
   User? userData;
+
 
   @override
   void initState() {  
-    userData = User.fromJson(json.decode(box.read('userData')));
+    localUserData = box.read('userData');
+    userData = User.fromJson(json.decode(localUserData));
     super.initState();
   }
 
