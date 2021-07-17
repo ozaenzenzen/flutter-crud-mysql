@@ -1,5 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_crud_mysql_1/cubit/connect_cubit.dart';
 import 'package:flutter_crud_mysql_1/model/user.dart';
 import 'package:flutter_crud_mysql_1/screens/adminpage.dart';
 import 'package:flutter_crud_mysql_1/screens/homepage.dart';
@@ -22,34 +24,69 @@ class _LoginPageState extends State<LoginPage> {
   TextEditingController userController = TextEditingController();
   TextEditingController passController = TextEditingController();
 
-  void loginMethod(var usernameData, var passwordData) {
-    if (usernameData.isEmpty || passwordData.isEmpty) {
-      print("empty text field");
-      loginShowDialog();
-    } else {
-      auth.login(usernameData, passwordData).then((value) {
-        user = value;
-        //
-        if (user == (null)) {
-          print("data is null");
-          loginShowDialog();
-        } else {
-          box.write('userUsername', user.username);
-          box.write('userPassword', user.password);
-          box.write('userLevel', user.level);
-          if (user.level == "admin") {
-            Get.off(() => AdminPage());
-          } else if (user.level == "member") {
-            Get.off(() => HomePage());
-          } else {
-            print("no role level");
-            loginShowDialog();
-          }
-        }
-        //
-      });
-    }
-  }
+  // void loginMethod(var usernameData, var passwordData) {
+  //   if (usernameData.isEmpty || passwordData.isEmpty) {
+  //     print("empty text field");
+  //     loginShowDialog();
+  //   } else {
+  //     auth.login(usernameData, passwordData).then((value) {
+  //       user = value;
+  //       //
+  //       if (user == (null)) {
+  //         print("data is null");
+  //         loginShowDialog();
+  //       } else {
+  //         box.write('userUsername', user.username);
+  //         box.write('userPassword', user.password);
+  //         box.write('userLevel', user.level);
+  //         if (user.level == "admin") {
+  //           Get.off(() => AdminPage());
+  //         } else if (user.level == "member") {
+  //           Get.off(() => HomePage());
+  //         } else {
+  //           print("no role level");
+  //           loginShowDialog();
+  //         }
+  //       }
+  //       //
+  //     });
+  //   }
+  // }
+
+  // void loginMethod(var usernameData, var passwordData) {
+  //   if (usernameData.isEmpty || passwordData.isEmpty) {
+  //     print("empty text field");
+  //     loginShowDialog();
+  //   } else {
+  //     final _requestData = User(
+  //       username: userController.text,
+  //       password: userController.text,
+  //     );
+  //     // BlocProvider.of<ConnectCubit>(context, listen: false)
+  //     //     .signInUser(_requestData);
+  //     auth.login(_requestData).then((value) {
+  //       user = value;
+  //       //
+  //       if (user == (null)) {
+  //         print("data is null");
+  //         loginShowDialog();
+  //       } else {
+  //         box.write('userUsername', user.username);
+  //         box.write('userPassword', user.password);
+  //         box.write('userLevel', user.level);
+  //         if (user.level == "admin") {
+  //           Get.off(() => AdminPage());
+  //         } else if (user.level == "member") {
+  //           Get.off(() => HomePage());
+  //         } else {
+  //           print("no role level");
+  //           loginShowDialog();
+  //         }
+  //       }
+  //       //
+  //     });
+  //   }
+  // }
 
   Future<dynamic> loginShowDialog() {
     return showDialog(
@@ -74,192 +111,279 @@ class _LoginPageState extends State<LoginPage> {
     ScreenUtil screenUtil = ScreenUtil();
     return Scaffold(
       body: SingleChildScrollView(
-        child: Column(
-          children: [
-            Stack(
-              children: [
-                ClipPath(
-                  clipBehavior: Clip.antiAlias,
-                  clipper: MyClipper(),
-                  child: Container(
-                    decoration: BoxDecoration(
-                      color: Colors.cyan,
-                    ),
-                    // height: MediaQuery.of(context).size.height * 0.5,
-                    height: screenUtil.setHeight(350),
-                    width: double.infinity,
-                  ),
-                ),
-                Positioned(
-                  top: 80,
-                  left: 20,
-                  child: Text(
-                    "Welcome!",
-                    style: TextStyle(
-                      color: Colors.white,
-                      fontFamily: "SF UI",
-                      fontSize: 60,
-                      fontWeight: FontWeight.bold,
-                    ),
-                  ),
-                ),
-                Positioned(
-                  top: 160,
-                  left: 25,
-                  child: Text(
-                    "Logbook App Login Page",
-                    style: TextStyle(
-                      color: Colors.white,
-                      fontFamily: "SF UI",
-                      fontSize: 23,
-                      fontWeight: FontWeight.bold,
-                    ),
-                  ),
-                ),
-              ],
+        child: MultiBlocProvider(
+          providers: [
+            BlocProvider(
+              create: (context) => ConnectCubit(),
             ),
-            Container(
-              margin: EdgeInsets.symmetric(
-                vertical: 10,
-                horizontal: 20,
-              ),
-              child: Column(
-                mainAxisAlignment: MainAxisAlignment.start,
-                children: [
-                  //Email/username Text Field
-                  Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Text(
-                        "Email / Username",
-                        style: TextStyle(
-                          fontFamily: "SF Text",
-                        ),
-                      ),
-                      SizedBox(
-                        height: 10,
-                      ),
-                      Container(
-                        padding: EdgeInsets.symmetric(horizontal: 10),
-                        decoration: BoxDecoration(
-                          borderRadius: BorderRadius.circular(20),
-                          color: Colors.white,
-                          boxShadow: [
-                            BoxShadow(
-                              color: Colors.cyan.shade100,
-                              offset: Offset(0, 10),
-                              spreadRadius: 1,
-                              blurRadius: 10,
-                            ),
-                          ],
-                        ),
-                        child: TextField(
-                          controller: userController,
-                          decoration: InputDecoration(
-                            border: InputBorder.none,
-                            labelText: "Email / Username",
-                            labelStyle: TextStyle(
-                              fontFamily: "SF Text",
-                              fontSize: 13,
-                            ),
-                          ),
-                        ),
-                      ),
-                    ],
-                  ),
-                  SizedBox(
-                    height: 20,
-                  ),
+            // BlocProvider(
+            //   create: (context) => ConnectCubit()..loadUserFromLocal(),
+            // ),
+          ],
+          child: BlocConsumer<ConnectCubit, ConnectState>(
+            listener: (context, state) {
+              if (state is ConnectError) {
+                print("connect error");
+                showDialog(
+                  context: context,
+                  builder: (context) => LoginAlertDialog(),
+                );
+              } else if (state is ConnectLoading) {
+                print('loading');
+              } else if (state is ConnectLoginSuccess) {
+                print("connect login success");
 
-                  //Password Text Field
-                  Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
+                BlocProvider.of<ConnectCubit>(context)
+                    .saveUserToLocal(state.userData);
+                    
+                if (state.userData.level == "admin") {
+                  Get.off(() => AdminPage());
+                } else if (state.userData.level == "member") {
+                  Get.off(() => HomePage());
+                }
+              } else if (state is ConnectSuccess) {
+                // BlocProvider.of<ConnectCubit>(context).loadUserFromLocal();
+                print("connect success");
+                // Get.off(() => AdminPage());
+                // print("${state.userData}");
+                // if (user.level == 'admin') {
+                //   Get.off(() => AdminPage());
+                // } else {
+                //   Get.off(() => HomePage());
+                // }
+              }
+            },
+            builder: (context, state) {
+              return Column(
+                children: [
+                  Stack(
                     children: [
-                      Text(
-                        "Password",
-                        style: TextStyle(
-                          fontFamily: "SF Text",
+                      ClipPath(
+                        clipBehavior: Clip.antiAlias,
+                        clipper: MyClipper(),
+                        child: Container(
+                          decoration: BoxDecoration(
+                            color: Colors.cyan,
+                          ),
+                          // height: MediaQuery.of(context).size.height * 0.5,
+                          height: screenUtil.setHeight(350),
+                          width: double.infinity,
                         ),
                       ),
-                      SizedBox(
-                        height: 10,
-                      ),
-                      Container(
-                        padding: EdgeInsets.symmetric(horizontal: 10),
-                        decoration: BoxDecoration(
-                          borderRadius: BorderRadius.circular(20),
-                          color: Colors.white,
-                          boxShadow: [
-                            BoxShadow(
-                              color: Colors.cyan.shade100,
-                              offset: Offset(0, 10),
-                              spreadRadius: 1,
-                              blurRadius: 10,
-                            ),
-                          ],
+                      Positioned(
+                        top: 100,
+                        left: 20,
+                        child: Text(
+                          "Welcome!",
+                          style: TextStyle(
+                            color: Colors.white,
+                            fontFamily: "SF UI",
+                            fontSize: 60,
+                            fontWeight: FontWeight.bold,
+                          ),
                         ),
-                        child: TextField(
-                          textInputAction: TextInputAction.go,
-                          onSubmitted: (value) {
-                            loginMethod(
-                              userController.text,
-                              passController.text,
-                            );
-                          },
-                          controller: passController,
-                          obscureText: _secureText,
-                          decoration: InputDecoration(
-                            // border: OutlineInputBorder(),
-                            border: InputBorder.none,
-                            suffixIcon: IconButton(
-                              onPressed: () {
-                                setState(() {
-                                  _secureText = !_secureText;
-                                });
-                              },
-                              icon: Icon((_secureText)
-                                  ? CupertinoIcons.eye_fill
-                                  : CupertinoIcons.eye_slash_fill),
-                            ),
-                            labelText: "Password",
-                            labelStyle: TextStyle(
-                              fontFamily: "SF Text",
-                              fontSize: 13,
-                            ),
+                      ),
+                      Positioned(
+                        top: 180,
+                        left: 25,
+                        child: Text(
+                          "Logbook App Login Page",
+                          style: TextStyle(
+                            color: Colors.white,
+                            fontFamily: "SF UI",
+                            fontSize: 23,
+                            fontWeight: FontWeight.bold,
                           ),
                         ),
                       ),
                     ],
                   ),
-                  SizedBox(
-                    height: 35,
-                  ),
-                  ElevatedButton(
-                    onPressed: () {
-                      loginMethod(
-                        userController.text,
-                        passController.text,
-                      );
-                    },
-                    style: ElevatedButton.styleFrom(
-                      minimumSize: Size(120, 50),
-                      primary: Colors.cyan,
+                  Container(
+                    margin: EdgeInsets.symmetric(
+                      vertical: 10,
+                      horizontal: 20,
                     ),
-                    child: Text(
-                      "Login",
-                      style: TextStyle(
-                        fontFamily: "SF Text",
-                        fontSize: 17,
-                      ),
+                    child: Column(
+                      mainAxisAlignment: MainAxisAlignment.start,
+                      children: [
+                        //Email/username Text Field
+                        Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Text(
+                              "Email / Username",
+                              style: TextStyle(
+                                fontFamily: "SF Text",
+                              ),
+                            ),
+                            SizedBox(
+                              height: 10,
+                            ),
+                            Container(
+                              padding: EdgeInsets.symmetric(horizontal: 10),
+                              decoration: BoxDecoration(
+                                borderRadius: BorderRadius.circular(20),
+                                color: Colors.white,
+                                boxShadow: [
+                                  BoxShadow(
+                                    color: Colors.cyan.shade100,
+                                    offset: Offset(0, 10),
+                                    spreadRadius: 1,
+                                    blurRadius: 10,
+                                  ),
+                                ],
+                              ),
+                              child: TextFormField(
+                                // validator: validateUsername,
+                                controller: userController,
+                                decoration: InputDecoration(
+                                  border: InputBorder.none,
+                                  labelText: "Email / Username",
+                                  labelStyle: TextStyle(
+                                    fontFamily: "SF Text",
+                                    fontSize: 13,
+                                  ),
+                                ),
+                              ),
+                            ),
+                          ],
+                        ),
+                        SizedBox(
+                          height: 20,
+                        ),
+
+                        //Password Text Field
+                        Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Text(
+                              "Password",
+                              style: TextStyle(
+                                fontFamily: "SF Text",
+                              ),
+                            ),
+                            SizedBox(
+                              height: 10,
+                            ),
+                            Container(
+                              padding: EdgeInsets.symmetric(horizontal: 10),
+                              decoration: BoxDecoration(
+                                borderRadius: BorderRadius.circular(20),
+                                color: Colors.white,
+                                boxShadow: [
+                                  BoxShadow(
+                                    color: Colors.cyan.shade100,
+                                    offset: Offset(0, 10),
+                                    spreadRadius: 1,
+                                    blurRadius: 10,
+                                  ),
+                                ],
+                              ),
+                              child: TextField(
+                                // validator: validatePassword,
+                                textInputAction: TextInputAction.go,
+                                onSubmitted: (value) {
+                                  // loginMethod(
+                                  //   userController.text,
+                                  //   passController.text,
+                                  // );
+                                },
+                                controller: passController,
+                                obscureText: _secureText,
+                                decoration: InputDecoration(
+                                  // border: OutlineInputBorder(),
+                                  border: InputBorder.none,
+                                  suffixIcon: IconButton(
+                                    onPressed: () {
+                                      setState(() {
+                                        _secureText = !_secureText;
+                                      });
+                                    },
+                                    icon: Icon((_secureText)
+                                        ? CupertinoIcons.eye_fill
+                                        : CupertinoIcons.eye_slash_fill),
+                                  ),
+                                  labelText: "Password",
+                                  labelStyle: TextStyle(
+                                    fontFamily: "SF Text",
+                                    fontSize: 13,
+                                  ),
+                                ),
+                              ),
+                            ),
+                          ],
+                        ),
+                        SizedBox(
+                          height: 35,
+                        ),
+                        (state is ConnectLoading)
+                            ? Center(
+                                child: Container(
+                                  height: 30,
+                                  width: 30,
+                                  child: CircularProgressIndicator(),
+                                ),
+                              )
+                            : ElevatedButton(
+                                onPressed: () {
+                                  // loginMethod(
+                                  //   userController.text,
+                                  //   passController.text,
+                                  // );
+                                  final _requestData = User(
+                                    username: userController.text,
+                                    password: passController.text,
+                                  );
+                                  BlocProvider.of<ConnectCubit>(context,
+                                          listen: false)
+                                      .signInUser(_requestData);
+                                },
+                                style: ElevatedButton.styleFrom(
+                                  minimumSize: Size(120, 50),
+                                  primary: Colors.cyan,
+                                ),
+                                child: Text(
+                                  "Login",
+                                  style: TextStyle(
+                                    fontFamily: "SF Text",
+                                    fontSize: 17,
+                                  ),
+                                ),
+                              ),
+                      ],
                     ),
                   ),
                 ],
-              ),
-            ),
-          ],
+              );
+            },
+          ),
         ),
       ),
     );
+  }
+
+  String? validateUsername(String value) {
+    if (value.length < 3) {
+      if (value.isEmpty) {
+        return "User can't be empty!";
+      } else {
+        return "User must be more than 4 character";
+      }
+    } else {
+      return null;
+    }
+  }
+
+  String? validatePassword(String value) {
+    if (value.length < 5) {
+      if (value.isEmpty) {
+        return "Password can't be empty!";
+      } else {
+        return "Password must be more than 4 character";
+      }
+    } else {
+      return null;
+    }
   }
 }
 
