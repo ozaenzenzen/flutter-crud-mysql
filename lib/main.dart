@@ -1,4 +1,7 @@
+import 'dart:convert';
+
 import 'package:flutter/material.dart';
+import 'package:flutter_crud_mysql_1/model/user.dart';
 import 'package:flutter_crud_mysql_1/screens/adminpage.dart';
 import 'package:flutter_crud_mysql_1/screens/homepage.dart';
 import 'package:flutter_crud_mysql_1/screens/loginpage.dart';
@@ -20,18 +23,22 @@ class _MyAppState extends State<MyApp> {
   @override
   Widget build(BuildContext context) {
     final box = GetStorage();
-    var userUsername = box.read('userUsername');
-    var userPassword = box.read('userPassword');
-    var userLevel = box.read('userLevel');
+    var localData = box.read('userData');
+    User? userData;
+    
+    if (localData == (null)) {
+      userData = null;
+    } else {
+      userData = User.fromJson(json.decode(box.read('userData')));
+    }
 
     return ScreenUtilInit(
-      
       builder: () => GetMaterialApp(
-        home: (userUsername == null)
+        home: (userData == (null))
             ? LoginPage()
-            : (userLevel == "admin")
+            : (userData.level == "admin")
                 ? AdminPage()
-                : (userLevel == "member")
+                : (userData.level == "member")
                     ? HomePage()
                     : LoginPage(),
         debugShowCheckedModeBanner: false,
