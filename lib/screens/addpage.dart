@@ -19,8 +19,8 @@ class AddPage extends StatefulWidget {
 }
 
 class _AddPageState extends State<AddPage> {
-  String? type;
   var data;
+  String? type;
   int? index;
 
   Connect connect = Connect();

@@ -40,10 +40,11 @@ class _HomeItemState extends State<HomeItem> {
           borderRadius: BorderRadius.circular(8),
           boxShadow: [
             BoxShadow(
-                offset: Offset(0, 3),
-                blurRadius: 0.5,
-                spreadRadius: 0.5,
-                color: Colors.black38)
+              offset: Offset(0, 3),
+              blurRadius: 0.5,
+              spreadRadius: 0.5,
+              color: Colors.black38,
+            )
           ],
         ),
         child: Container(

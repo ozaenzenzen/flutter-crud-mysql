@@ -29,7 +29,7 @@ class Auth {
   //   }
   // }
 
-  // Future<Either<String, User>> login2(User user) async {
+
   Future<Either<String, User>> login(User user) async {
     Response _response;
     String url = "http://10.0.2.2/flutter_crud_mysql1/login.php";
