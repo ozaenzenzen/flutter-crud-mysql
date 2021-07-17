@@ -33,10 +33,15 @@ class Auth {
   Future<Either<String, User>> login(User user) async {
     Response _response;
     String url = "http://10.0.2.2/flutter_crud_mysql1/login.php";
-
     try {
-      _response = await dio.post(url, data: user.toJson());
-      User _userResp = User.fromJson(_response.data[0]);
+      var data = FormData.fromMap({
+        'username': user.username,
+        'password': user.password,
+      });
+
+      _response = await dio.post(url, data: data);
+      List jsonObject = json.decode(_response.data);
+      User _userResp = User.fromJson(jsonObject[0]);
       return right(_userResp);
     } on DioError catch (e) {
       print(e.response!.statusCode);
