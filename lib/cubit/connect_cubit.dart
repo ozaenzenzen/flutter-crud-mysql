@@ -17,7 +17,8 @@ class ConnectCubit extends Cubit<ConnectState> {
     emit(ConnectLoading());
 
     try {
-      final _data = await _auth.login(userData.username, userData.password);
+      // final _data = await _auth.login(userData.username, userData.password);
+      final _data = await _auth.login(userData);
 
       _data.fold(
         (l) => emit(ConnectError(l)),
@@ -31,11 +32,8 @@ class ConnectCubit extends Cubit<ConnectState> {
   void saveUserToLocal(User userData) async {
     emit(ConnectLoading());
     try {
-      // GetStorage().write('userData', jsonDecode(userData));
+      GetStorage().write('userData', json.encode(userData));
 
-      GetStorage().write('userUsername', userData.username);
-      GetStorage().write('userPassword', userData.password);
-      GetStorage().write('userLevel', userData.level);
       emit(ConnectSuccess());
     } catch (e) {
       emit(ConnectError(e.toString()));
@@ -44,18 +42,22 @@ class ConnectCubit extends Cubit<ConnectState> {
 
   void loadUserFromLocal() async {
     emit(ConnectLoading());
-    try{
-      // final _userData = GetStorage.read('userData');
+    try {
+      final _data = await GetStorage().read("userData");
+      final _result = User.fromJson(json.decode(_data));
 
-      final _userUsername = GetStorage().read('userUsername');
-      final _userPassword = GetStorage().read('userPassword');
-      final _userLevel = GetStorage().read('userLevel');
-
-      emit(ConnectLoginSuccess(_userUsername));
-      
-    }
-    catch(e){
+      emit(ConnectLoginSuccess(_result));
+    } catch (e) {
       emit(ConnectError(e.toString()));
+    }
+  }
+
+  Future<String?> getUserStorage() async {
+    final _data = await GetStorage().read("userData");
+    if (_data != null) {
+      return _data;
+    } else {
+      return null;
     }
   }
 }
