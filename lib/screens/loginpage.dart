@@ -20,6 +20,7 @@ class _LoginPageState extends State<LoginPage> {
   Auth auth = Auth();
   User user = User();
   final box = GetStorage();
+  final _formKey = GlobalKey<FormState>();
 
   TextEditingController userController = TextEditingController();
   TextEditingController passController = TextEditingController();
@@ -30,41 +31,6 @@ class _LoginPageState extends State<LoginPage> {
   //     loginShowDialog();
   //   } else {
   //     auth.login(usernameData, passwordData).then((value) {
-  //       user = value;
-  //       //
-  //       if (user == (null)) {
-  //         print("data is null");
-  //         loginShowDialog();
-  //       } else {
-  //         box.write('userUsername', user.username);
-  //         box.write('userPassword', user.password);
-  //         box.write('userLevel', user.level);
-  //         if (user.level == "admin") {
-  //           Get.off(() => AdminPage());
-  //         } else if (user.level == "member") {
-  //           Get.off(() => HomePage());
-  //         } else {
-  //           print("no role level");
-  //           loginShowDialog();
-  //         }
-  //       }
-  //       //
-  //     });
-  //   }
-  // }
-
-  // void loginMethod(var usernameData, var passwordData) {
-  //   if (usernameData.isEmpty || passwordData.isEmpty) {
-  //     print("empty text field");
-  //     loginShowDialog();
-  //   } else {
-  //     final _requestData = User(
-  //       username: userController.text,
-  //       password: userController.text,
-  //     );
-  //     // BlocProvider.of<ConnectCubit>(context, listen: false)
-  //     //     .signInUser(_requestData);
-  //     auth.login(_requestData).then((value) {
   //       user = value;
   //       //
   //       if (user == (null)) {
@@ -124,33 +90,20 @@ class _LoginPageState extends State<LoginPage> {
             listener: (context, state) {
               if (state is ConnectError) {
                 print("connect error");
-                showDialog(
-                  context: context,
-                  builder: (context) => LoginAlertDialog(),
-                );
+                loginShowDialog();
               } else if (state is ConnectLoading) {
                 print('loading');
               } else if (state is ConnectLoginSuccess) {
                 print("connect login success");
-
                 BlocProvider.of<ConnectCubit>(context)
                     .saveUserToLocal(state.userData);
-                    
                 if (state.userData.level == "admin") {
                   Get.off(() => AdminPage());
                 } else if (state.userData.level == "member") {
                   Get.off(() => HomePage());
                 }
               } else if (state is ConnectSuccess) {
-                // BlocProvider.of<ConnectCubit>(context).loadUserFromLocal();
                 print("connect success");
-                // Get.off(() => AdminPage());
-                // print("${state.userData}");
-                // if (user.level == 'admin') {
-                //   Get.off(() => AdminPage());
-                // } else {
-                //   Get.off(() => HomePage());
-                // }
               }
             },
             builder: (context, state) {
@@ -203,154 +156,173 @@ class _LoginPageState extends State<LoginPage> {
                       vertical: 10,
                       horizontal: 20,
                     ),
-                    child: Column(
-                      mainAxisAlignment: MainAxisAlignment.start,
-                      children: [
-                        //Email/username Text Field
-                        Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            Text(
-                              "Email / Username",
-                              style: TextStyle(
-                                fontFamily: "SF Text",
+                    child: Form(
+                      key: _formKey,
+                      child: Column(
+                        mainAxisAlignment: MainAxisAlignment.start,
+                        children: [
+                          //
+                          //Email/username Text Field
+                          Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              Text(
+                                "Email / Username",
+                                style: TextStyle(
+                                  fontFamily: "SF Text",
+                                ),
                               ),
-                            ),
-                            SizedBox(
-                              height: 10,
-                            ),
-                            Container(
-                              padding: EdgeInsets.symmetric(horizontal: 10),
-                              decoration: BoxDecoration(
-                                borderRadius: BorderRadius.circular(20),
-                                color: Colors.white,
-                                boxShadow: [
-                                  BoxShadow(
-                                    color: Colors.cyan.shade100,
-                                    offset: Offset(0, 10),
-                                    spreadRadius: 1,
-                                    blurRadius: 10,
-                                  ),
-                                ],
+                              SizedBox(
+                                height: 10,
                               ),
-                              child: TextFormField(
-                                // validator: validateUsername,
-                                controller: userController,
-                                decoration: InputDecoration(
-                                  border: InputBorder.none,
-                                  labelText: "Email / Username",
-                                  labelStyle: TextStyle(
-                                    fontFamily: "SF Text",
-                                    fontSize: 13,
+                              Container(
+                                padding: EdgeInsets.symmetric(horizontal: 10),
+                                decoration: BoxDecoration(
+                                  borderRadius: BorderRadius.circular(20),
+                                  color: Colors.white,
+                                  boxShadow: [
+                                    BoxShadow(
+                                      color: Colors.cyan.shade100,
+                                      offset: Offset(0, 10),
+                                      spreadRadius: 1,
+                                      blurRadius: 10,
+                                    ),
+                                  ],
+                                ),
+                                child: TextFormField(
+                                  validator: (value) {
+                                    if (value == null || value.isEmpty) {
+                                      return 'Field cannot be empty';
+                                    }
+                                    return null;
+                                  },
+                                  controller: userController,
+                                  decoration: InputDecoration(
+                                    border: InputBorder.none,
+                                    labelText: "Email / Username",
+                                    labelStyle: TextStyle(
+                                      fontFamily: "SF Text",
+                                      fontSize: 13,
+                                    ),
                                   ),
                                 ),
                               ),
-                            ),
-                          ],
-                        ),
-                        SizedBox(
-                          height: 20,
-                        ),
+                            ],
+                          ),
+                          SizedBox(
+                            height: 20,
+                          ),
 
-                        //Password Text Field
-                        Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            Text(
-                              "Password",
-                              style: TextStyle(
-                                fontFamily: "SF Text",
-                              ),
-                            ),
-                            SizedBox(
-                              height: 10,
-                            ),
-                            Container(
-                              padding: EdgeInsets.symmetric(horizontal: 10),
-                              decoration: BoxDecoration(
-                                borderRadius: BorderRadius.circular(20),
-                                color: Colors.white,
-                                boxShadow: [
-                                  BoxShadow(
-                                    color: Colors.cyan.shade100,
-                                    offset: Offset(0, 10),
-                                    spreadRadius: 1,
-                                    blurRadius: 10,
-                                  ),
-                                ],
-                              ),
-                              child: TextField(
-                                // validator: validatePassword,
-                                textInputAction: TextInputAction.go,
-                                onSubmitted: (value) {
-                                  // loginMethod(
-                                  //   userController.text,
-                                  //   passController.text,
-                                  // );
-                                },
-                                controller: passController,
-                                obscureText: _secureText,
-                                decoration: InputDecoration(
-                                  // border: OutlineInputBorder(),
-                                  border: InputBorder.none,
-                                  suffixIcon: IconButton(
-                                    onPressed: () {
-                                      setState(() {
-                                        _secureText = !_secureText;
-                                      });
-                                    },
-                                    icon: Icon((_secureText)
-                                        ? CupertinoIcons.eye_fill
-                                        : CupertinoIcons.eye_slash_fill),
-                                  ),
-                                  labelText: "Password",
-                                  labelStyle: TextStyle(
-                                    fontFamily: "SF Text",
-                                    fontSize: 13,
-                                  ),
+                          //
+                          //Password Text Field
+                          Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              Text(
+                                "Password",
+                                style: TextStyle(
+                                  fontFamily: "SF Text",
                                 ),
                               ),
-                            ),
-                          ],
-                        ),
-                        SizedBox(
-                          height: 35,
-                        ),
-                        (state is ConnectLoading)
-                            ? Center(
-                                child: Container(
-                                  height: 30,
-                                  width: 30,
-                                  child: CircularProgressIndicator(),
+                              SizedBox(
+                                height: 10,
+                              ),
+                              Container(
+                                padding: EdgeInsets.symmetric(horizontal: 10),
+                                decoration: BoxDecoration(
+                                  borderRadius: BorderRadius.circular(20),
+                                  color: Colors.white,
+                                  boxShadow: [
+                                    BoxShadow(
+                                      color: Colors.cyan.shade100,
+                                      offset: Offset(0, 10),
+                                      spreadRadius: 1,
+                                      blurRadius: 10,
+                                    ),
+                                  ],
                                 ),
-                              )
-                            : ElevatedButton(
-                                onPressed: () {
-                                  // loginMethod(
-                                  //   userController.text,
-                                  //   passController.text,
-                                  // );
-                                  final _requestData = User(
-                                    username: userController.text,
-                                    password: passController.text,
-                                  );
-                                  BlocProvider.of<ConnectCubit>(context,
-                                          listen: false)
-                                      .signInUser(_requestData);
-                                },
-                                style: ElevatedButton.styleFrom(
-                                  minimumSize: Size(120, 50),
-                                  primary: Colors.cyan,
-                                ),
-                                child: Text(
-                                  "Login",
-                                  style: TextStyle(
-                                    fontFamily: "SF Text",
-                                    fontSize: 17,
+                                child: TextFormField(
+                                  validator: (value) {
+                                    if (value == null || value.isEmpty) {
+                                      return 'Field cannot be empty';
+                                    }
+                                    return null;
+                                  },
+                                  textInputAction: TextInputAction.go,
+                                  onFieldSubmitted: (value) {
+                                    FocusScope.of(context).unfocus();
+                                    if (_formKey.currentState!.validate()) {
+                                      final _requestData = User(
+                                        username: userController.text,
+                                        password: passController.text,
+                                      );
+                                      BlocProvider.of<ConnectCubit>(context,
+                                              listen: false)
+                                          .signInUser(_requestData);
+                                    }
+                                  },
+                                  controller: passController,
+                                  obscureText: _secureText,
+                                  decoration: InputDecoration(
+                                    border: InputBorder.none,
+                                    suffixIcon: IconButton(
+                                      onPressed: () {
+                                        setState(() {
+                                          _secureText = !_secureText;
+                                        });
+                                      },
+                                      icon: Icon((_secureText)
+                                          ? CupertinoIcons.eye_fill
+                                          : CupertinoIcons.eye_slash_fill),
+                                    ),
+                                    labelText: "Password",
+                                    labelStyle: TextStyle(
+                                      fontFamily: "SF Text",
+                                      fontSize: 13,
+                                    ),
                                   ),
                                 ),
                               ),
-                      ],
+                            ],
+                          ),
+                          SizedBox(
+                            height: 35,
+                          ),
+                          (state is ConnectLoading)
+                              ? Center(
+                                  child: Container(
+                                    height: 30,
+                                    width: 30,
+                                    child: CircularProgressIndicator(),
+                                  ),
+                                )
+                              : ElevatedButton(
+                                  onPressed: () {
+                                    FocusScope.of(context).unfocus();
+                                    if (_formKey.currentState!.validate()) {
+                                      final _requestData = User(
+                                        username: userController.text,
+                                        password: passController.text,
+                                      );
+                                      BlocProvider.of<ConnectCubit>(context,
+                                              listen: false)
+                                          .signInUser(_requestData);
+                                    }
+                                  },
+                                  style: ElevatedButton.styleFrom(
+                                    minimumSize: Size(120, 50),
+                                    primary: Colors.cyan,
+                                  ),
+                                  child: Text(
+                                    "Login",
+                                    style: TextStyle(
+                                      fontFamily: "SF Text",
+                                      fontSize: 17,
+                                    ),
+                                  ),
+                                ),
+                        ],
+                      ),
                     ),
                   ),
                 ],
