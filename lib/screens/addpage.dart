@@ -1,6 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_crud_mysql_1/services/connect.dart';
+import 'package:flutter_crud_mysql_1/services/homedata_services.dart';
 import 'package:get/get.dart';
 
 class AddPage extends StatefulWidget {
@@ -23,7 +23,7 @@ class _AddPageState extends State<AddPage> {
   String? type;
   int? index;
 
-  Connect connect = Connect();
+  Homedata homedata = Homedata();
   TextEditingController codeController = new TextEditingController();
   TextEditingController nameController = new TextEditingController();
   TextEditingController priceController = new TextEditingController();
@@ -135,7 +135,7 @@ class _AddPageState extends State<AddPage> {
                                       onPressed: () {
                                         Get.back();
                                         setState(() {
-                                          connect.deleteData(data[index]['id']);
+                                          homedata.deleteData(data[index]['id']);
                                         });
                                         Get.back();
                                       },
@@ -161,7 +161,7 @@ class _AddPageState extends State<AddPage> {
                     FocusScope.of(context).unfocus();
                     if (type == "edit") {
                       setState(() {
-                        connect.editData(
+                        homedata.editData(
                           data[index]['id'],
                           codeController.text,
                           nameController.text,
@@ -172,7 +172,7 @@ class _AddPageState extends State<AddPage> {
                       });
                     } else {
                       setState(() {
-                        connect.addData(
+                        homedata.addData(
                           codeController.text,
                           nameController.text,
                           priceController.text,
