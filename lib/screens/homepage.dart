@@ -3,15 +3,16 @@ import 'dart:convert';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_crud_mysql_1/model/itemdata.dart';
-import 'package:flutter_crud_mysql_1/model/user.dart';
+import 'package:flutter_crud_mysql_1/model/user_model.dart';
 import 'package:flutter_crud_mysql_1/screens/addpage.dart';
 import 'package:flutter_crud_mysql_1/screens/profilepage.dart';
-import 'package:flutter_crud_mysql_1/services/connect.dart';
+import 'package:flutter_crud_mysql_1/services/homedata_services.dart';
 import 'package:flutter_crud_mysql_1/widget/home_item.dart';
 import 'package:flutter_crud_mysql_1/widget/home_popup_menu.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
+
 
 class HomePage extends StatefulWidget {
   @override
@@ -19,11 +20,13 @@ class HomePage extends StatefulWidget {
 }
 
 class _HomePageState extends State<HomePage> {
-  ScrollController scrollController = ScrollController();
-  Connect connect = Connect();
-  final box = GetStorage();
-  ItemData data = ItemData();
   ScreenUtil screenUtil = ScreenUtil();
+  ScrollController scrollController = ScrollController();
+  final box = GetStorage();
+
+  Homedata homedata = Homedata();
+  ItemData data = ItemData();
+
   var localUserData;
   User? userData;
 
@@ -158,7 +161,7 @@ class _HomePageState extends State<HomePage> {
                 crossAxisAlignment: CrossAxisAlignment.end,
                 children: [
                   StreamBuilder<List>(
-                    stream: connect.getDataStream(),
+                    stream: homedata.getDataStream(),
                     builder: (context, snapshot) {
                       var data = snapshot.data;
                       if (snapshot.hasData == true) {

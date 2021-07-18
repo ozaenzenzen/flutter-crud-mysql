@@ -1,11 +1,11 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:flutter_crud_mysql_1/cubit/connect_cubit.dart';
-import 'package:flutter_crud_mysql_1/model/user.dart';
+import 'package:flutter_crud_mysql_1/cubit/auth/auth_cubit.dart';
+import 'package:flutter_crud_mysql_1/model/user_model.dart';
 import 'package:flutter_crud_mysql_1/screens/adminpage.dart';
 import 'package:flutter_crud_mysql_1/screens/homepage.dart';
-import 'package:flutter_crud_mysql_1/services/auth.dart';
+import 'package:flutter_crud_mysql_1/services/auth_services.dart';
 import 'package:flutter_crud_mysql_1/widget/login_alertdialog.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
@@ -19,6 +19,7 @@ class LoginPage extends StatefulWidget {
 class _LoginPageState extends State<LoginPage> {
   Auth auth = Auth();
   User user = User();
+
   final box = GetStorage();
   final _formKey = GlobalKey<FormState>();
 
@@ -80,30 +81,30 @@ class _LoginPageState extends State<LoginPage> {
         child: MultiBlocProvider(
           providers: [
             BlocProvider(
-              create: (context) => ConnectCubit(),
+              create: (context) => AuthCubit(),
             ),
             // BlocProvider(
-            //   create: (context) => ConnectCubit()..loadUserFromLocal(),
+            //   create: (context) => AuthCubit()..loadUserFromLocal(),
             // ),
           ],
-          child: BlocConsumer<ConnectCubit, ConnectState>(
+          child: BlocConsumer<AuthCubit, AuthState>(
             listener: (context, state) {
-              if (state is ConnectError) {
-                print("connect error");
+              if (state is AuthError) {
+                print("auth error");
                 loginShowDialog();
-              } else if (state is ConnectLoading) {
+              } else if (state is AuthLoading) {
                 print('loading');
-              } else if (state is ConnectLoginSuccess) {
-                print("connect login success");
-                BlocProvider.of<ConnectCubit>(context)
+              } else if (state is AuthLoginSuccess) {
+                print("auth login success");
+                BlocProvider.of<AuthCubit>(context)
                     .saveUserToLocal(state.userData);
                 if (state.userData.level == "admin") {
                   Get.off(() => AdminPage());
                 } else if (state.userData.level == "member") {
                   Get.off(() => HomePage());
                 }
-              } else if (state is ConnectSuccess) {
-                print("connect success");
+              } else if (state is AuthSuccess) {
+                print("auth success");
               }
             },
             builder: (context, state) {
@@ -256,7 +257,7 @@ class _LoginPageState extends State<LoginPage> {
                                         username: userController.text,
                                         password: passController.text,
                                       );
-                                      BlocProvider.of<ConnectCubit>(context,
+                                      BlocProvider.of<AuthCubit>(context,
                                               listen: false)
                                           .signInUser(_requestData);
                                     }
@@ -288,7 +289,7 @@ class _LoginPageState extends State<LoginPage> {
                           SizedBox(
                             height: 35,
                           ),
-                          (state is ConnectLoading)
+                          (state is AuthLoading)
                               ? Center(
                                   child: Container(
                                     height: 30,
@@ -304,7 +305,7 @@ class _LoginPageState extends State<LoginPage> {
                                         username: userController.text,
                                         password: passController.text,
                                       );
-                                      BlocProvider.of<ConnectCubit>(context,
+                                      BlocProvider.of<AuthCubit>(context,
                                               listen: false)
                                           .signInUser(_requestData);
                                     }

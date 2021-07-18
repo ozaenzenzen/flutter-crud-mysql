@@ -1,6 +1,6 @@
 import 'dart:convert';
 import 'package:dartz/dartz.dart';
-import 'package:flutter_crud_mysql_1/model/user.dart';
+import 'package:flutter_crud_mysql_1/model/user_model.dart';
 import 'package:dio/dio.dart';
 
 class Auth {
