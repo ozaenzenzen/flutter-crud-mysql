@@ -1,7 +1,7 @@
 import 'dart:convert';
 
 import 'package:flutter/material.dart';
-import 'package:flutter_crud_mysql_1/model/user.dart';
+import 'package:flutter_crud_mysql_1/model/user_model.dart';
 import 'package:get_storage/get_storage.dart';
 
 class ProfilePage extends StatefulWidget {
