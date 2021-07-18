@@ -2,7 +2,7 @@ import 'dart:convert';
 import 'package:dio/dio.dart';
 import 'package:flutter_crud_mysql_1/model/itemdata.dart';
 
-class Connect {
+class Homedata {
   ItemData data = ItemData();
   final dio = Dio();
 
