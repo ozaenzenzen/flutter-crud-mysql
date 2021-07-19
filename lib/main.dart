@@ -3,6 +3,7 @@ import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:flutter_crud_mysql_1/model/user_model.dart';
 import 'package:flutter_crud_mysql_1/screens/adminpage.dart';
+import 'package:flutter_crud_mysql_1/screens/data_page(dummy).dart';
 import 'package:flutter_crud_mysql_1/screens/homepage.dart';
 import 'package:flutter_crud_mysql_1/screens/loginpage.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -34,6 +35,7 @@ class _MyAppState extends State<MyApp> {
 
     return ScreenUtilInit(
       builder: () => GetMaterialApp(
+        // home: DataPage(),
         home: (userData == (null))
             ? LoginPage()
             : (userData.level == "admin")
