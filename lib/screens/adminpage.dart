@@ -16,11 +16,12 @@ class _AdminPageState extends State<AdminPage> {
   var localUserData;
   User? userData;
 
-
   @override
-  void initState() {  
-    localUserData = box.read('userData');
-    userData = User.fromJson(json.decode(localUserData));
+  void initState() {
+    if (box.read('userData') != null) {
+      localUserData = box.read('userData');
+      userData = User.fromJson(json.decode(localUserData));
+    }
     super.initState();
   }
 
@@ -66,8 +67,8 @@ class _AdminPageState extends State<AdminPage> {
                 ),
               )
             : Container(
-              child: Column(
-                mainAxisAlignment: MainAxisAlignment.center,
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.center,
                   children: [
                     Text("You're not an admin!"),
                     ElevatedButton(
@@ -78,7 +79,7 @@ class _AdminPageState extends State<AdminPage> {
                     ),
                   ],
                 ),
-            ),
+              ),
       ),
     );
   }

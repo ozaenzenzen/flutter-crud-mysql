@@ -13,7 +13,6 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
 
-
 class HomePage extends StatefulWidget {
   @override
   _HomePageState createState() => _HomePageState();
@@ -32,8 +31,10 @@ class _HomePageState extends State<HomePage> {
 
   @override
   void initState() {
-    localUserData = box.read('userData');
-    userData = User.fromJson(json.decode(localUserData));
+    if (box.read('userData') != null) {
+      localUserData = box.read('userData');
+      userData = User.fromJson(json.decode(localUserData));
+    }
     super.initState();
   }
 
