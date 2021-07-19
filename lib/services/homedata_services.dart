@@ -1,6 +1,7 @@
 import 'dart:convert';
 import 'package:dio/dio.dart';
 import 'package:flutter_crud_mysql_1/model/itemdata.dart';
+import 'package:flutter_crud_mysql_1/urls/urls.dart';
 
 class Homedata {
   ItemData data = ItemData();
@@ -11,7 +12,7 @@ class Homedata {
   }
 
   Future<List> getData() async {
-    String url = "http://10.0.2.2/flutter_crud_mysql1/get_data.php";
+    String url = Urls.BASE_URL + "get_data.php";
 
     final response = await dio.get(url);
 
@@ -24,7 +25,7 @@ class Homedata {
   }
 
   void addData(var itemcode, var itemname, var price, var stock) {
-    String url = "http://10.0.2.2/flutter_crud_mysql1/add_data.php";
+    String url = Urls.BASE_URL + "add_data.php";
 
     var data = FormData.fromMap({
       'item_code': itemcode,
@@ -40,7 +41,7 @@ class Homedata {
   }
 
   void editData(var id, var itemcode, var itemname, var price, var stock) {
-    String url = "http://10.0.2.2/flutter_crud_mysql1/edit_data.php";
+    String url = Urls.BASE_URL + "edit_data.php";
 
     var data = FormData.fromMap({
       'id': id,
@@ -57,7 +58,7 @@ class Homedata {
   }
 
   void deleteData(var id) {
-    String url = "http://10.0.2.2/flutter_crud_mysql1/delete_data.php";
+    String url = Urls.BASE_URL + "delete_data.php";
 
     var data = FormData.fromMap({
       'id': id,
