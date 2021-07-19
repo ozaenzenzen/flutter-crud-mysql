@@ -31,6 +31,7 @@ dependencies:
   flutter_screenutil: ^5.0.0+2
   get: ^4.1.4
   get_storage: ^2.0.2
+  html: ^0.15.0
   http: ^0.13.3
   screen_utils: ^0.0.1
 
