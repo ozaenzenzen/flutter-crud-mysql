@@ -1,10 +1,8 @@
 import 'dart:convert';
-import 'dart:io';
 import 'package:dartz/dartz.dart';
 import 'package:flutter_crud_mysql_1/model/user_model.dart';
 import 'package:dio/dio.dart';
 import 'package:flutter_crud_mysql_1/urls/urls.dart';
-import 'package:html/parser.dart';
 
 class Auth {
   Dio dio = Dio();
