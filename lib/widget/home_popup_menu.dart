@@ -23,7 +23,7 @@ class HomePopupMenu extends StatelessWidget {
       ),
       onSelected: (value) {
         if (value == 1) {
-          Get.to(() => ProfilePage());
+          // Get.to(() => ProfilePage());
         } else if (value == 2) {
         } else {
           box.remove('userData');
