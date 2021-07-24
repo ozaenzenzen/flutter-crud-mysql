@@ -104,7 +104,7 @@ class _LoginPageState extends State<LoginPage> {
                 if (state.userData.level == "admin") {
                   Get.off(() => AdminPage());
                 } else if (state.userData.level == "member") {
-                  Get.off(() => HomePage());
+                  Get.off(() => MainPage());
                 }
               } else if (state is AuthSuccess) {
                 print("auth success");

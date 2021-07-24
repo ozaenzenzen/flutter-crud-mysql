@@ -52,7 +52,7 @@ class _AdminPageState extends State<AdminPage> {
                         primary: Colors.cyan,
                       ),
                       onPressed: () {
-                        Get.to(() => HomePage());
+                        Get.to(() => MainPage());
                       },
                       child: Text("Halaman Home"),
                     ),
@@ -73,7 +73,7 @@ class _AdminPageState extends State<AdminPage> {
                     Text("You're not an admin!"),
                     ElevatedButton(
                       onPressed: () {
-                        Get.to(() => HomePage());
+                        Get.to(() => MainPage());
                       },
                       child: Text("Halaman Home"),
                     ),
