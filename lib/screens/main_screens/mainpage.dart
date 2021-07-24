@@ -18,12 +18,14 @@ import 'package:flutter_crud_mysql_1/widget/home_item.dart';
 import 'package:flutter_crud_mysql_1/widget/home_popup_menu.dart';
 import 'package:flutter_crud_mysql_1/widget/login_alertdialog.dart';
 
-class HomePage extends StatefulWidget {
+class MainPage extends StatefulWidget {
+  const MainPage({Key? key}) : super(key: key);
+
   @override
-  _HomePageState createState() => _HomePageState();
+  _MainPageState createState() => _MainPageState();
 }
 
-class _HomePageState extends State<HomePage> {
+class _MainPageState extends State<MainPage> {
   ScreenUtil screenUtil = ScreenUtil();
   ScrollController scrollController = ScrollController();
   final box = GetStorage();
