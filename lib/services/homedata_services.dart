@@ -8,22 +8,134 @@ class Homedata {
   ItemData data = ItemData();
   final dio = Dio();
 
-  Future<Either<String, ItemData>> getDataCubit() async {
+  Future<Either<String, List>> getDataCubit() async {
     Response _response;
     String url = Urls.BASE_URL + "get_data.php";
 
     try {
-      _response = await dio.get(
-        url,
-        options: Options(
-          headers: {
-            'Content-type': 'application/json',
-            'Accept': 'application/json',
-          },
-          contentType: Headers.jsonContentType,
-          responseType: ResponseType.json,
-        ),
-      );
+      _response = await dio.get(url);
+
+      var jsonObject = json.decode(_response.data);
+
+      List _itemDataResp = jsonObject as List;
+      // ItemData _itemDataResp = ItemData.fromJson(jsonObject);
+      return right(_itemDataResp);
+    } on DioError catch (e) {
+      print(e.response!.statusCode);
+      String errorMessage = e.response!.data.toString();
+
+      switch (e.type) {
+        case DioErrorType.connectTimeout:
+          break;
+        case DioErrorType.sendTimeout:
+          break;
+        case DioErrorType.receiveTimeout:
+          break;
+        case DioErrorType.response:
+          errorMessage = e.response!.data['message'];
+          break;
+        case DioErrorType.cancel:
+          break;
+        case DioErrorType.other:
+          break;
+      }
+      return left(errorMessage);
+    }
+  }
+
+  Future<Either<String, ItemData>> addDataCubit(ItemData itemData) async {
+    Response _response;
+    String url = Urls.BASE_URL + "add_data.php";
+
+    try {
+      var data = FormData.fromMap({
+        'item_code': itemData.itemCode,
+        'item_name': itemData.itemName,
+        'price': itemData.price,
+        'stock': itemData.stock,
+      });
+
+      _response = await dio.post(url, data: data);
+
+      var jsonObject = json.decode(_response.data);
+
+      ItemData _itemDataResp = ItemData.fromJson(jsonObject);
+      return right(_itemDataResp);
+    } on DioError catch (e) {
+      print(e.response!.statusCode);
+      String errorMessage = e.response!.data.toString();
+
+      switch (e.type) {
+        case DioErrorType.connectTimeout:
+          break;
+        case DioErrorType.sendTimeout:
+          break;
+        case DioErrorType.receiveTimeout:
+          break;
+        case DioErrorType.response:
+          errorMessage = e.response!.data['message'];
+          break;
+        case DioErrorType.cancel:
+          break;
+        case DioErrorType.other:
+          break;
+      }
+      return left(errorMessage);
+    }
+  }
+
+  Future<Either<String, ItemData>> editDataCubit(ItemData itemData) async {
+    Response _response;
+    String url = Urls.BASE_URL + "get_data.php";
+
+    try {
+      var data = FormData.fromMap({
+        'id': itemData.id,
+        'item_code': itemData.itemCode,
+        'item_name': itemData.itemName,
+        'price': itemData.price,
+        'stock': itemData.stock,
+      });
+
+      _response = await dio.post(url, data: data);
+
+      var jsonObject = json.decode(_response.data);
+
+      ItemData _itemDataResp = ItemData.fromJson(jsonObject);
+      return right(_itemDataResp);
+    } on DioError catch (e) {
+      print(e.response!.statusCode);
+      String errorMessage = e.response!.data.toString();
+
+      switch (e.type) {
+        case DioErrorType.connectTimeout:
+          break;
+        case DioErrorType.sendTimeout:
+          break;
+        case DioErrorType.receiveTimeout:
+          break;
+        case DioErrorType.response:
+          errorMessage = e.response!.data['message'];
+          break;
+        case DioErrorType.cancel:
+          break;
+        case DioErrorType.other:
+          break;
+      }
+      return left(errorMessage);
+    }
+  }
+
+  Future<Either<String, ItemData>> deleteDataCubit(ItemData itemData) async {
+    Response _response;
+    String url = Urls.BASE_URL + "delete_data.php";
+
+    try {
+      var data = FormData.fromMap({
+        'id': itemData.id,
+      });
+
+      _response = await dio.post(url, data: data);
 
       var jsonObject = json.decode(_response.data);
 
