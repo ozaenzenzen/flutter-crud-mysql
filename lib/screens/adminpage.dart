@@ -2,7 +2,7 @@ import 'dart:convert';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_crud_mysql_1/model/user_model.dart';
-import 'package:flutter_crud_mysql_1/screens/homepage.dart';
+import 'package:flutter_crud_mysql_1/screens/main_screens/mainpage.dart';
 import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
 
