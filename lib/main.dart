@@ -3,7 +3,7 @@ import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:flutter_crud_mysql_1/model/user_model.dart';
 import 'package:flutter_crud_mysql_1/screens/adminpage.dart';
-import 'package:flutter_crud_mysql_1/screens/homepage.dart';
+import 'package:flutter_crud_mysql_1/screens/main_screens/mainpage.dart';
 import 'package:flutter_crud_mysql_1/screens/loginpage.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
@@ -40,7 +40,7 @@ class _MyAppState extends State<MyApp> {
             : (userData.level == "admin")
                 ? AdminPage()
                 : (userData.level == "member")
-                    ? HomePage()
+                    ? MainPage()
                     : LoginPage(),
         debugShowCheckedModeBanner: false,
         defaultTransition: Transition.cupertino,

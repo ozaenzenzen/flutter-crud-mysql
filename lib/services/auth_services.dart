@@ -1,16 +1,16 @@
 import 'dart:convert';
+import 'dart:io';
 import 'package:dartz/dartz.dart';
 import 'package:flutter_crud_mysql_1/model/user_model.dart';
 import 'package:dio/dio.dart';
 import 'package:flutter_crud_mysql_1/urls/urls.dart';
+import 'package:http/http.dart' as http;
 
 class Auth {
   Dio dio = Dio();
 
   Future<Either<String, User>> login(User user) async {
-    // dynamic _response;
     Response _response;
-    // HttpClientResponse _response;
     String url = Urls.BASE_URL + "login.php";
 
     try {
@@ -32,8 +32,6 @@ class Auth {
         ),
       );
 
-      // print("data nih: ${_response.data}");
-      // print("data nih:: ${_response.headers}");
       List jsonObject = json.decode(_response.data);
 
       User _userResp = User.fromJson(jsonObject[0]);

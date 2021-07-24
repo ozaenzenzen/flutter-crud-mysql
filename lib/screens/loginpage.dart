@@ -4,7 +4,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_crud_mysql_1/cubit/auth/auth_cubit.dart';
 import 'package:flutter_crud_mysql_1/model/user_model.dart';
 import 'package:flutter_crud_mysql_1/screens/adminpage.dart';
-import 'package:flutter_crud_mysql_1/screens/homepage.dart';
+import 'package:flutter_crud_mysql_1/screens/main_screens/mainpage.dart';
 import 'package:flutter_crud_mysql_1/services/auth_services.dart';
 import 'package:flutter_crud_mysql_1/widget/login_alertdialog.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -59,7 +59,10 @@ class _LoginPageState extends State<LoginPage> {
     return showDialog(
       context: context,
       builder: (context) {
-        return LoginAlertDialog();
+        return LoginAlertDialog(
+          title: "Username / Password Salah" , 
+          content: "Silakan coba login kembali" ,
+        );
       },
     );
   }
@@ -101,7 +104,7 @@ class _LoginPageState extends State<LoginPage> {
                 if (state.userData.level == "admin") {
                   Get.off(() => AdminPage());
                 } else if (state.userData.level == "member") {
-                  Get.off(() => HomePage());
+                  Get.off(() => MainPage());
                 }
               } else if (state is AuthSuccess) {
                 print("auth success");

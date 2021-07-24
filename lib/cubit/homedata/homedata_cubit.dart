@@ -1,4 +1,5 @@
 import 'package:bloc/bloc.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter_crud_mysql_1/model/itemdata.dart';
 import 'package:flutter_crud_mysql_1/services/homedata_services.dart';
 import 'package:meta/meta.dart';
@@ -20,6 +21,42 @@ class HomedataCubit extends Cubit<HomedataState> {
         (l) => emit(HomedataError(l)),
         (r) => emit(HomedataGetSuccess(r)),
       );
+    } catch (e) {
+      emit(HomedataError(e.toString()));
+    }
+  }
+
+  void addItemListData(ItemData itemData) async {
+    emit(HomedataLoading());
+
+    try {
+      _homedata.addDataCubit(itemData);
+
+      emit(HomedataSuccess());
+    } catch (e) {
+      emit(HomedataError(e.toString()));
+    }
+  }
+
+  void editItemListData(ItemData itemData) async {
+    emit(HomedataLoading());
+
+    try {
+      _homedata.editDataCubit(itemData);
+
+      emit(HomedataSuccess());
+    } catch (e) {
+      emit(HomedataError(e.toString()));
+    }
+  }
+
+  void deleteItemListData(ItemData itemData) async {
+    emit(HomedataLoading());
+
+    try {
+      _homedata.deleteDataCubit(itemData);
+
+      emit(HomedataSuccess());
     } catch (e) {
       emit(HomedataError(e.toString()));
     }

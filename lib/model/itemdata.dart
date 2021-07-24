@@ -1,5 +1,6 @@
 class ItemData {
-  int? id;
+  // int? id;
+  String? id;
   String? itemCode;
   String? itemName;
   String? price;
@@ -15,7 +16,7 @@ class ItemData {
 
   factory ItemData.fromJson(Map<String, dynamic> object) {
     return ItemData(
-      id: object['id'],
+      id: object['id'].toString(),
       itemCode: object['item_code'].toString(),
       itemName: object['item_name'].toString(),
       price: object['price'].toString(),
@@ -23,7 +24,7 @@ class ItemData {
     );
   }
 
-  Map<String, dynamic> toJson(){
+  Map<String, dynamic> toJson() {
     Map<String, dynamic> data = Map<String, dynamic>();
     data['id'] = this.id;
     data['item_code'] = this.itemCode;

@@ -1,7 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_crud_mysql_1/screens/loginpage.dart';
-import 'package:flutter_crud_mysql_1/screens/profilepage.dart';
+import 'package:flutter_crud_mysql_1/screens/main_screens/profilepage.dart';
 import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
 
@@ -23,7 +23,7 @@ class HomePopupMenu extends StatelessWidget {
       ),
       onSelected: (value) {
         if (value == 1) {
-          Get.to(() => ProfilePage());
+          // Get.to(() => ProfilePage());
         } else if (value == 2) {
         } else {
           box.remove('userData');
