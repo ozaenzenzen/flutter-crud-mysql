@@ -25,7 +25,8 @@ class HomeNavigationPage extends StatelessWidget {
     return MultiBlocProvider(
       providers: [
         BlocProvider<HomedataCubit>(
-          create: (context) => HomedataCubit(),
+          // create: (context) =>  HomedataCubit()..getItemListData(),
+          create: (context) =>  HomedataCubit(),
         ),
       ],
       child: BlocConsumer<HomedataCubit, HomedataState>(
