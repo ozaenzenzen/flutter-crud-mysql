@@ -43,7 +43,7 @@ class Homedata {
     }
   }
 
-  Future<Either<String, ItemData>> addDataCubit(ItemData itemData) async {
+  Future<Either<String, List>> addDataCubit(ItemData itemData) async {
     Response _response;
     String url = Urls.BASE_URL + "add_data.php";
 
@@ -59,7 +59,9 @@ class Homedata {
 
       var jsonObject = json.decode(_response.data);
 
-      ItemData _itemDataResp = ItemData.fromJson(jsonObject);
+      List _itemDataResp = jsonObject as List;
+
+      // ItemData _itemDataResp = ItemData.fromJson(jsonObject);
       return right(_itemDataResp);
     } on DioError catch (e) {
       print(e.response!.statusCode);
