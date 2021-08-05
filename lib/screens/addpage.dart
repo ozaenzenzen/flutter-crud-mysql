@@ -55,152 +55,156 @@ class _AddPageState extends State<AddPage> {
   Widget build(BuildContext context) {
     return BlocProvider(
       create: (context) => HomedataCubit(),
-      child: BlocListener<HomedataCubit, HomedataState>(
-        listener: (context, state) {},
-        child: Scaffold(
-          appBar: AppBar(
-            backgroundColor: Colors.cyan,
-            centerTitle: true,
-            title: Text(
-              (type == "edit") ? "Edit Data" : "Add Data",
-              style: TextStyle(
-                fontFamily: "SF UI",
-                fontSize: 22,
-                fontWeight: FontWeight.bold,
-              ),
+      child: Scaffold(
+        appBar: AppBar(
+          backgroundColor: Colors.cyan,
+          centerTitle: true,
+          title: Text(
+            (type == "edit") ? "Edit Data" : "Add Data",
+            style: TextStyle(
+              fontFamily: "SF UI",
+              fontSize: 22,
+              fontWeight: FontWeight.bold,
             ),
           ),
-          body: Container(
-            margin: EdgeInsets.symmetric(
-              horizontal: 15,
-            ),
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.end,
-              children: [
-                TextField(
-                  controller: codeController,
-                  decoration: InputDecoration(
-                    labelText: "Item Code",
-                    labelStyle: TextStyle(
-                      fontFamily: "SF Text",
-                      fontSize: 14,
-                    ),
+        ),
+        body: Container(
+          margin: EdgeInsets.symmetric(
+            horizontal: 15,
+          ),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.end,
+            children: [
+              TextField(
+                controller: codeController,
+                decoration: InputDecoration(
+                  labelText: "Item Code",
+                  labelStyle: TextStyle(
+                    fontFamily: "SF Text",
+                    fontSize: 14,
                   ),
                 ),
-                TextField(
-                  controller: nameController,
-                  decoration: InputDecoration(
-                    labelText: "Item Name",
-                    labelStyle: TextStyle(
-                      fontFamily: "SF Text",
-                      fontSize: 14,
-                    ),
+              ),
+              TextField(
+                controller: nameController,
+                decoration: InputDecoration(
+                  labelText: "Item Name",
+                  labelStyle: TextStyle(
+                    fontFamily: "SF Text",
+                    fontSize: 14,
                   ),
                 ),
-                TextField(
-                  controller: priceController,
-                  decoration: InputDecoration(
-                    labelText: "Price",
-                    labelStyle: TextStyle(
-                      fontFamily: "SF Text",
-                      fontSize: 14,
-                    ),
+              ),
+              TextField(
+                controller: priceController,
+                decoration: InputDecoration(
+                  labelText: "Price",
+                  labelStyle: TextStyle(
+                    fontFamily: "SF Text",
+                    fontSize: 14,
                   ),
                 ),
-                TextField(
-                  controller: stockController,
-                  decoration: InputDecoration(
-                    labelText: "Stock",
-                    labelStyle: TextStyle(
-                      fontFamily: "SF Text",
-                      fontSize: 14,
-                    ),
+              ),
+              TextField(
+                controller: stockController,
+                decoration: InputDecoration(
+                  labelText: "Stock",
+                  labelStyle: TextStyle(
+                    fontFamily: "SF Text",
+                    fontSize: 14,
                   ),
                 ),
-                SizedBox(height: 10),
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.end,
-                  children: [
-                    (type == "edit")
-                        ? ElevatedButton(
-                            style: ElevatedButton.styleFrom(
-                              primary: Colors.red,
-                            ),
-                            onPressed: () {
-                              showDialog(
-                                  context: context,
-                                  builder: (context) {
-                                    return AlertDialog(
-                                      title: Text("Delete Data"),
-                                      content: Text(
-                                          "Data will be lost. Are you sure?"),
-                                      actions: [
-                                        ElevatedButton(
-                                          style: ElevatedButton.styleFrom(
-                                            primary: Colors.red,
-                                          ),
-                                          child: Text("Delete"),
-                                          onPressed: () {
-                                            Get.back();
-                                            setState(() {
-                                              // BlocProvider.of<HomedataCubit>(context).deleteItemListData(data!);
-                                              homedata.deleteData(data!.id);
-                                            });
-                                            Get.back();
-                                          },
+              ),
+              SizedBox(height: 10),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.end,
+                children: [
+                  (type == "edit")
+                      ? ElevatedButton(
+                          style: ElevatedButton.styleFrom(
+                            primary: Colors.red,
+                          ),
+                          onPressed: () {
+                            showDialog(
+                                context: context,
+                                builder: (context) {
+                                  return AlertDialog(
+                                    title: Text("Delete Data"),
+                                    content: Text(
+                                        "Data will be lost. Are you sure?"),
+                                    actions: [
+                                      ElevatedButton(
+                                        style: ElevatedButton.styleFrom(
+                                          primary: Colors.red,
                                         ),
-                                        TextButton(
-                                          child: Text("Cancel"),
-                                          onPressed: () {
-                                            Get.back();
-                                          },
-                                        ),
-                                      ],
-                                    );
-                                  });
-                            },
-                            child: Text("Delete"),
-                          )
-                        : Container(),
-                    SizedBox(
-                      width: 10,
-                    ),
-                    ElevatedButton(
-                      onPressed: () {
-                        FocusScope.of(context).unfocus();
-                        if (type == "edit") {
-                          setState(() {
-                            // BlocProvider.of<HomedataCubit>(context,
-                            //         listen: false)
-                            //     .editItemListData(data!);
-                            homedata.editData(
-                              data!.id,
-                              codeController.text,
-                              nameController.text,
-                              priceController.text,
-                              stockController.text,
-                            );
-                            Get.back();
-                          });
-                        } else {
-                          setState(() {
-                            // BlocProvider.of<HomedataCubit>(context, listen: false).addItemListData(data!);
-                            homedata.addData(
-                              codeController.text,
-                              nameController.text,
-                              priceController.text,
-                              stockController.text,
-                            );
-                            Get.back();
-                          });
-                        }
-                      },
-                      child: Text((type == "edit") ? "Update Now" : "Add Data"),
-                    ),
-                  ],
-                ),
-              ],
-            ),
+                                        child: Text("Delete"),
+                                        onPressed: () {
+                                          Get.back();
+                                          setState(() {
+                                            // BlocProvider.of<HomedataCubit>(context).deleteItemListData(data!);
+                                            homedata.deleteData(data!.id);
+                                          });
+                                          Get.back();
+                                        },
+                                      ),
+                                      TextButton(
+                                        child: Text("Cancel"),
+                                        onPressed: () {
+                                          Get.back();
+                                        },
+                                      ),
+                                    ],
+                                  );
+                                });
+                          },
+                          child: Text("Delete"),
+                        )
+                      : Container(),
+                  SizedBox(
+                    width: 10,
+                  ),
+                  ElevatedButton(
+                    onPressed: () {
+                      FocusScope.of(context).unfocus();
+                      if (type == "edit") {
+                        setState(() {
+                          // BlocProvider.of<HomedataCubit>(context,
+                          //         listen: false)
+                          //     .editItemListData(data!);
+                          homedata.editData(
+                            data!.id,
+                            codeController.text,
+                            nameController.text,
+                            priceController.text,
+                            stockController.text,
+                          );
+                          Get.back();
+                        });
+                      } else {
+                        final postData = ItemData(
+                          itemCode: codeController.text,
+                          itemName: nameController.text,
+                          price: priceController.text,
+                          stock: stockController.text,
+                        );
+                        BlocProvider.of<HomedataCubit>(context, listen: false)
+                            .addItemListData(postData);
+                        // setState(() {
+                          // homedata.addData(
+                          // codeController.text,
+                          // nameController.text,
+                          // priceController.text,
+                          // stockController.text,
+                          // );
+                        // });
+                        // Get.back();
+                      }
+                    },
+                    child: Text((type == "edit") ? "Update Now" : "Add Data"),
+                  ),
+                ],
+              ),
+            ],
           ),
         ),
       ),
