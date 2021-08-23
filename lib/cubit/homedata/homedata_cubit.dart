@@ -31,7 +31,7 @@ class HomedataCubit extends Cubit<HomedataState> {
 
     try {
       final _data = await _homedata.addDataCubit(itemData);
-      
+
       _data.fold(
         (l) => emit(HomedataError(l)),
         (r) => emit(HomedataGetSuccess(r)),
@@ -46,9 +46,14 @@ class HomedataCubit extends Cubit<HomedataState> {
     emit(HomedataLoading());
 
     try {
-      _homedata.editDataCubit(itemData);
+      final _data = await _homedata.editDataCubit(itemData);
+      
+      _data.fold(
+        (l) => emit(HomedataError(l)),
+        (r) => emit(HomedataGetSuccess(r)),
+      );
 
-      emit(HomedataSuccess());
+      // emit(HomedataSuccess());
     } catch (e) {
       emit(HomedataError(e.toString()));
     }
