@@ -143,10 +143,10 @@ class _AddPageState extends State<AddPage> {
                                       onPressed: () {
                                         Get.back();
                                         setState(() {
-                                          BlocProvider.of<HomedataCubit>(
-                                                  context)
-                                              .deleteItemListData(data!);
-                                          // homedata.deleteData(data!.id);
+                                          // BlocProvider.of<HomedataCubit>(
+                                          //         context)
+                                          //     .deleteItemListData(data!);
+                                          homedata.deleteData(data!.id);
                                         });
                                         // Get.back();
                                         Get.offAll(
@@ -180,10 +180,22 @@ class _AddPageState extends State<AddPage> {
 
                     FocusScope.of(context).unfocus();
                     if (type == "edit") {
+                      final postData = ItemData(
+                        id: data!.id,
+                        itemCode: codeController.text,
+                        itemName: nameController.text,
+                        price: priceController.text,
+                        stock: stockController.text,
+                      );
+
+                      print(postData);
+
                       setState(() {
-                        // BlocProvider.of<HomedataCubit>(context,
-                        //         listen: false)
-                        //     .editItemListData(data!);
+                        // BlocProvider.of<HomedataCubit>(context, listen: false)
+                        //     .editItemListData(postData);
+
+                        //
+
                         homedata.editData(
                           data!.id,
                           codeController.text,
@@ -191,6 +203,7 @@ class _AddPageState extends State<AddPage> {
                           priceController.text,
                           stockController.text,
                         );
+
                         // Get.back();
                         Get.offAll(
                           () => MainPage(),
@@ -204,16 +217,19 @@ class _AddPageState extends State<AddPage> {
                         price: priceController.text,
                         stock: stockController.text,
                       );
-                      // BlocProvider.of<HomedataCubit>(context, listen: false)
-                      //     .addItemListData(postData);
 
                       setState(() {
-                      homedata.addData(
-                      codeController.text,
-                      nameController.text,
-                      priceController.text,
-                      stockController.text,
-                      );
+                        BlocProvider.of<HomedataCubit>(context, listen: false)
+                            .addItemListData(postData);
+
+                        //
+
+                        // homedata.addData(
+                        //   codeController.text,
+                        //   nameController.text,
+                        //   priceController.text,
+                        //   stockController.text,
+                        // );
                       });
                       // Get.back();
                       Get.offAll(
