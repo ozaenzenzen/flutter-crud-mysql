@@ -86,7 +86,8 @@ class Homedata {
     }
   }
 
-  Future<Either<String, ItemData>> editDataCubit(ItemData itemData) async {
+  Future<Either<String, List>> editDataCubit(ItemData itemData) async {
+    print(itemData.id);
     Response _response;
     String url = Urls.BASE_URL + "get_data.php";
 
@@ -103,7 +104,11 @@ class Homedata {
 
       var jsonObject = json.decode(_response.data);
 
-      ItemData _itemDataResp = ItemData.fromJson(jsonObject);
+      List _itemDataResp = jsonObject as List;
+
+      print(_response.statusCode);
+
+      // ItemData _itemDataResp = ItemData.fromJson(jsonObject);
       return right(_itemDataResp);
     } on DioError catch (e) {
       print(e.response!.statusCode);
