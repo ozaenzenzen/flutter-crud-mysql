@@ -55,6 +55,16 @@ class _MyAppState extends State<MyApp> {
                       : LoginPage(),
           debugShowCheckedModeBanner: false,
           defaultTransition: transition.Transition.cupertino,
+          getPages: [
+            GetPage(
+              name: '/mainPage',
+              page: () => MainPage(),
+            ),
+            GetPage(
+              name: '/adminPage',
+              page: () => AdminPage(),
+            ),
+          ],
         ),
       ),
     );
