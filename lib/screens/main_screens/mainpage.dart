@@ -2,20 +2,16 @@ import 'dart:convert';
 
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
+
 import 'package:flutter_crud_mysql_1/screens/main_screens/homepage.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:get/get.dart';
+
 import 'package:get_storage/get_storage.dart';
 
-import 'package:flutter_crud_mysql_1/cubit/homedata/homedata_cubit.dart';
 import 'package:flutter_crud_mysql_1/model/itemdata.dart';
 import 'package:flutter_crud_mysql_1/model/user_model.dart';
-import 'package:flutter_crud_mysql_1/screens/addpage.dart';
 import 'package:flutter_crud_mysql_1/screens/main_screens/profilepage.dart';
 import 'package:flutter_crud_mysql_1/services/homedata_services.dart';
-import 'package:flutter_crud_mysql_1/widget/home_item.dart';
-import 'package:flutter_crud_mysql_1/widget/home_popup_menu.dart';
 import 'package:flutter_crud_mysql_1/widget/login_alertdialog.dart';
 
 class MainPage extends StatefulWidget {
