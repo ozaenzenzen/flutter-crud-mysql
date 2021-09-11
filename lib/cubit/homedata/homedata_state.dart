@@ -15,8 +15,6 @@ class HomedataError extends HomedataState {
 }
 
 class HomedataGetSuccess extends HomedataState {
-  // final ItemData itemData;
-  // final Widget itemData;
   final List itemData;
   HomedataGetSuccess(this.itemData);
 }
