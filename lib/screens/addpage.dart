@@ -11,6 +11,8 @@ import 'package:get/get.dart';
 import 'package:get/get_navigation/src/routes/transitions_type.dart'
     as transition;
 
+import 'dart:ui';
+
 class AddPage extends StatefulWidget {
   final ItemData? data;
   final type;
