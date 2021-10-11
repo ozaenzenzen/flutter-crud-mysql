@@ -84,7 +84,9 @@ class _AddPageState extends State<AddPage> {
             if (state is AddDataLoading) {
               Container(
                 height: screenUtil.screenHeight,
-                child: Center(
+                child: SizedBox(
+                  height: screenUtil.setHeight(30),
+                  width: screenUtil.setWidth(30),
                   child: CircularProgressIndicator(),
                 ),
               );
@@ -117,6 +119,16 @@ class _AddPageState extends State<AddPage> {
             }
           },
           builder: (context, state) {
+            if (state is AddDataLoading) {
+              return Container(
+                height: screenUtil.screenHeight,
+                child: SizedBox(
+                  height: screenUtil.setHeight(30),
+                  width: screenUtil.setWidth(30),
+                  child: CircularProgressIndicator(),
+                ),
+              );
+            }
             return Container(
               margin: EdgeInsets.symmetric(
                 horizontal: 15,
@@ -266,10 +278,10 @@ class _AddPageState extends State<AddPage> {
                               stock: stockController.text,
                             );
 
-                            setState(() {
-                              BlocProvider.of<HomedataCubit>(context,
-                                      listen: false)
-                                  .addItemListData(postData);
+                            context.read<AddDataCubit>().addItemListData(postData);
+
+                              // BlocProvider.of<HomedataCubit>(context,listen: false).addItemListData(postData);
+                            // setState(() {
 
                               //
 
@@ -279,12 +291,14 @@ class _AddPageState extends State<AddPage> {
                               //   priceController.text,
                               //   stockController.text,
                               // );
-                            });
+                            // });
+
+                            
                             // Get.back();
-                            Get.offAll(
-                              () => MainPage(),
-                              transition: transition.Transition.rightToLeft,
-                            );
+                            // Get.offAll(
+                            //   () => MainPage(),
+                            //   transition: transition.Transition.rightToLeft,
+                            // );
                           }
                         },
                         child:
