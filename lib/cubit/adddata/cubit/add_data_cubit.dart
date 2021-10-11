@@ -36,7 +36,7 @@ class AddDataCubit extends Cubit<AddDataState> {
       emit(AddDataSuccess());
 
       // final _data = await _addDataServices.addDataCubit(itemData);
-      
+
       // _data.fold(
       //   (l) => emit(AddDataError(l)),
       //   (r) => emit(AddDataGetSuccess(r)),
@@ -50,24 +50,36 @@ class AddDataCubit extends Cubit<AddDataState> {
     emit(AddDataLoading());
 
     try {
-      final _data = await _addDataServices.editDataCubit(itemData);
+      _addDataServices.editData(itemData).onError(
+            (error, stackTrace) => emit(
+              AddDataError(error.toString()),
+            ),
+          );
 
-      _data.fold(
-        (l) => emit(AddDataError(l)),
-        (r) => emit(AddDataGetSuccess(r)),
-      );
+      emit(AddDataSuccess());
 
-      // emit(AddDataSuccess());
+      // final _data = await _addDataServices.editDataCubit(itemData);
+
+      // _data.fold(
+      //   (l) => emit(AddDataError(l)),
+      //   (r) => emit(AddDataGetSuccess(r)),
+      // );
+
     } catch (e) {
       emit(AddDataError(e.toString()));
     }
   }
 
-  void deleteItemListData(ItemData itemData) async {
+  void deleteItemListData(String id) async {
     emit(AddDataLoading());
 
     try {
-      _addDataServices.deleteDataCubit(itemData);
+      // _addDataServices.deleteDataCubit(itemData).onError(
+      _addDataServices.deleteData(id).onError(
+            (error, stackTrace) => emit(
+              AddDataError(error.toString()),
+            ),
+          );
 
       emit(AddDataSuccess());
     } catch (e) {
