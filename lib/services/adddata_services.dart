@@ -188,14 +188,14 @@ class AddDataServices {
     }
   }
 
-  void addData(var itemcode, var itemname, var price, var stock) {
+   Future addData(ItemData itemdata) async{
     String url = Urls.BASE_URL + "add_data.php";
 
     var data = FormData.fromMap({
-      'item_code': itemcode,
-      'item_name': itemname,
-      'price': price,
-      'stock': stock,
+      'item_code': itemdata.itemCode,
+      'item_name': itemdata.itemName,
+      'price': itemdata.price,
+      'stock': itemdata.stock,
     });
 
     dio.post(
