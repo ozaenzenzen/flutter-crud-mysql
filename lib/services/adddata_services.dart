@@ -204,15 +204,16 @@ class AddDataServices {
     );
   }
 
-  void editData(var id, var itemcode, var itemname, var price, var stock) {
+  // void editData(var id, var itemcode, var itemname, var price, var stock) {
+  Future editData(ItemData itemData) async{
     String url = Urls.BASE_URL + "edit_data.php";
 
     var data = FormData.fromMap({
-      'id': id,
-      'item_code': itemcode,
-      'item_name': itemname,
-      'price': price,
-      'stock': stock,
+      'id': itemData.id,
+      'item_code': itemData.itemCode,
+      'item_name': itemData.itemName,
+      'price': itemData.price,
+      'stock': itemData.stock,
     });
 
     dio.post(
@@ -221,7 +222,8 @@ class AddDataServices {
     );
   }
 
-  void deleteData(var id) {
+  Future deleteData(var id) async{
+  // void deleteData(var id) {
     String url = Urls.BASE_URL + "delete_data.php";
 
     var data = FormData.fromMap({
