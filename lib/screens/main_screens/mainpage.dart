@@ -11,7 +11,7 @@ import 'package:get_storage/get_storage.dart';
 import 'package:flutter_crud_mysql_1/model/itemdata.dart';
 import 'package:flutter_crud_mysql_1/model/user_model.dart';
 import 'package:flutter_crud_mysql_1/screens/main_screens/profilepage.dart';
-import 'package:flutter_crud_mysql_1/services/homedata_services.dart';
+import 'package:flutter_crud_mysql_1/services/adddata_services.dart';
 import 'package:flutter_crud_mysql_1/widget/login_alertdialog.dart';
 
 class MainPage extends StatefulWidget {
@@ -26,7 +26,7 @@ class _MainPageState extends State<MainPage> {
   ScrollController scrollController = ScrollController();
   final box = GetStorage();
 
-  Homedata homedata = Homedata();
+  AddDataServices addDataServices = AddDataServices();
   ItemData data = ItemData();
 
   var localUserData;

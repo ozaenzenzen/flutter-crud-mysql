@@ -5,7 +5,7 @@ import 'package:flutter_crud_mysql_1/cubit/homedata/homedata_cubit.dart';
 import 'package:flutter_crud_mysql_1/model/itemdata.dart';
 // import 'package:flutter_crud_mysql_1/screens/main_screens/homepage.dart';
 import 'package:flutter_crud_mysql_1/screens/main_screens/mainpage.dart';
-import 'package:flutter_crud_mysql_1/services/homedata_services.dart';
+import 'package:flutter_crud_mysql_1/services/adddata_services.dart';
 import 'package:get/get.dart';
 
 import 'package:get/get_navigation/src/routes/transitions_type.dart'
@@ -33,7 +33,8 @@ class _AddPageState extends State<AddPage> {
   String? type;
   int? index;
 
-  Homedata homedata = Homedata();
+  AddDataServices addDataServices= AddDataServices();
+  
   TextEditingController codeController = new TextEditingController();
   TextEditingController nameController = new TextEditingController();
   TextEditingController priceController = new TextEditingController();
@@ -148,7 +149,7 @@ class _AddPageState extends State<AddPage> {
                                           // BlocProvider.of<HomedataCubit>(
                                           //         context)
                                           //     .deleteItemListData(data!);
-                                          homedata.deleteData(data!.id);
+                                          addDataServices.deleteData(data!.id);
                                         });
                                         // Get.back();
                                         Get.offAll(
@@ -198,7 +199,7 @@ class _AddPageState extends State<AddPage> {
 
                         //
 
-                        homedata.editData(
+                        addDataServices.editData(
                           data!.id,
                           codeController.text,
                           nameController.text,
@@ -226,7 +227,7 @@ class _AddPageState extends State<AddPage> {
 
                         //
 
-                        // homedata.addData(
+                        // AddDataServices.addData(
                         //   codeController.text,
                         //   nameController.text,
                         //   priceController.text,
