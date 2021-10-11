@@ -2,17 +2,11 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_crud_mysql_1/cubit/adddata/cubit/add_data_cubit.dart';
-import 'package:flutter_crud_mysql_1/cubit/homedata/homedata_cubit.dart';
 import 'package:flutter_crud_mysql_1/model/itemdata.dart';
-// import 'package:flutter_crud_mysql_1/screens/main_screens/homepage.dart';
-import 'package:flutter_crud_mysql_1/screens/main_screens/mainpage.dart';
 import 'package:flutter_crud_mysql_1/services/adddata_services.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
-
-import 'package:get/get_navigation/src/routes/transitions_type.dart'
-    as transition;
-
+// import 'package:get/get_navigation/src/routes/transitions_type.dart' as transition;
 import 'dart:ui';
 
 class AddPage extends StatefulWidget {
@@ -188,7 +182,7 @@ class _AddPageState extends State<AddPage> {
                               onPressed: () {
                                 showDialog(
                                     context: context,
-                                    builder: (context) {
+                                    builder: (contextDialog) {
                                       return AlertDialog(
                                         title: Text("Delete Data"),
                                         content: Text(
@@ -201,19 +195,11 @@ class _AddPageState extends State<AddPage> {
                                             child: Text("Delete"),
                                             onPressed: () {
                                               Get.back();
-                                              setState(() {
-                                                // BlocProvider.of<HomedataCubit>(
-                                                //         context)
-                                                //     .deleteItemListData(data!);
-                                                addDataServices
-                                                    .deleteData(data!.id);
-                                              });
-                                              // Get.back();
-                                              Get.offAll(
-                                                () => MainPage(),
-                                                transition: transition
-                                                    .Transition.rightToLeft,
-                                              );
+
+                                              context
+                                                  .read<AddDataCubit>()
+                                                  .deleteItemListData(
+                                                      data!.id.toString());
                                             },
                                           ),
                                           TextButton(
@@ -234,10 +220,6 @@ class _AddPageState extends State<AddPage> {
                       ),
                       ElevatedButton(
                         onPressed: () {
-                          // Get.off(MainPage(), transition: transition.Transition.cupertino);
-
-                          //
-
                           FocusScope.of(context).unfocus();
                           if (type == "edit") {
                             final postData = ItemData(
@@ -248,57 +230,28 @@ class _AddPageState extends State<AddPage> {
                               stock: stockController.text,
                             );
 
-                            print(postData);
-
-                            setState(() {
-                              // BlocProvider.of<HomedataCubit>(context, listen: false)
-                              //     .editItemListData(postData);
-
-                              //
-
-                              addDataServices.editData(
-                                data!.id,
-                                codeController.text,
-                                nameController.text,
-                                priceController.text,
-                                stockController.text,
-                              );
-
-                              // Get.back();
-                              Get.offAll(
-                                () => MainPage(),
-                                transition: transition.Transition.rightToLeft,
-                              );
-                            });
+                            context
+                                .read<AddDataCubit>()
+                                .editItemListData(postData);
                           } else {
                             final postData = ItemData(
-                              itemCode: codeController.text,
-                              itemName: nameController.text,
-                              price: priceController.text,
-                              stock: stockController.text,
+                              itemCode: (codeController.text.isNotEmpty)
+                                  ? codeController.text
+                                  : "Null",
+                              itemName: (nameController.text.isNotEmpty)
+                                  ? nameController.text
+                                  : "Null",
+                              price: (priceController.text.isNotEmpty)
+                                  ? priceController.text
+                                  : "Null",
+                              stock: (stockController.text.isNotEmpty)
+                                  ? stockController.text
+                                  : "Null",
                             );
 
-                            context.read<AddDataCubit>().addItemListData(postData);
-
-                              // BlocProvider.of<HomedataCubit>(context,listen: false).addItemListData(postData);
-                            // setState(() {
-
-                              //
-
-                              // AddDataServices.addData(
-                              //   codeController.text,
-                              //   nameController.text,
-                              //   priceController.text,
-                              //   stockController.text,
-                              // );
-                            // });
-
-                            
-                            // Get.back();
-                            // Get.offAll(
-                            //   () => MainPage(),
-                            //   transition: transition.Transition.rightToLeft,
-                            // );
+                            context
+                                .read<AddDataCubit>()
+                                .addItemListData(postData);
                           }
                         },
                         child:
